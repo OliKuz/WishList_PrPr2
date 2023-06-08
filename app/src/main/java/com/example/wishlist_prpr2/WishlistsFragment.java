@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 public class WishlistsFragment extends Fragment {
+    private HomeActivity homeActivity;
+    public WishlistsFragment(HomeActivity homeActivity) {
+        this.homeActivity = homeActivity;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

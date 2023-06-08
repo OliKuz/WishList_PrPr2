@@ -16,29 +16,29 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        replaceFragment(new HomeFragment());
+        replaceFragment(new HomeFragment(this));
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
-                    replaceFragment(new HomeFragment());
+                    replaceFragment(new HomeFragment(this));
                     break;
                 case R.id.search:
-                    replaceFragment(new SearchFragment());
+                    replaceFragment(new SearchFragment(this));
                     break;
                 case R.id.wishlists:
-                    replaceFragment(new WishlistsFragment());
+                    replaceFragment(new WishlistsFragment(this));
                     break;
                 case R.id.profile:
-                    replaceFragment(new ProfileFragment());
+                    replaceFragment(new ProfileFragment(this));
                     break;
             }
             return true;
         });
     }
 
-    private void replaceFragment(Fragment fragment){
+    public void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);

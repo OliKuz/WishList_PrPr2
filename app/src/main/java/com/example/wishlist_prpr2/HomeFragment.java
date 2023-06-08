@@ -8,6 +8,12 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 public class HomeFragment extends Fragment {
+    private HomeActivity homeActivity;
+
+    public HomeFragment(HomeActivity homeActivity) {
+        this.homeActivity = homeActivity;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

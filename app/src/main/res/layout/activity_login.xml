@@ -44,23 +44,24 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/buttons_layout"
         android:layout_marginTop="32dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <EditText
             android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="8dp" />
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:hint="Password"
-            android:inputType="textPassword"
-            android:layout_marginBottom="8dp" />
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/login_button"
@@ -82,40 +83,40 @@
             android:id="@+id/name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:hint="Name" />
 
         <EditText
             android:id="@+id/s_email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="8dp" />
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/s_password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:hint="Password"
-            android:inputType="textPassword"
-            android:layout_marginBottom="8dp" />
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/confirm_password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:hint="Confirm Password"
-            android:inputType="textPassword"
-            android:layout_marginBottom="8dp" />
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/dob_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:hint="Date of Birth"
-            android:inputType="date"
-            android:layout_marginBottom="8dp" />
+            android:inputType="date" />
 
 
         <Button
@@ -125,8 +126,8 @@
             android:layout_below="@id/buttons_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:text="Select Photo"
-            android:onClick="onPhotoButtonClicked" />
+            android:onClick="onPhotoButtonClicked"
+            android:text="Select Photo" />
 
         <Button
             android:id="@+id/signup_button"
