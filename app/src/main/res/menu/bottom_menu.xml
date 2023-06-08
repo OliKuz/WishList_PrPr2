@@ -11,6 +11,6 @@
         android:icon="@drawable/wishlists_icon"
         android:id="@+id/wishlists"/>
     <item android:title="profile"
-        android:icon="@drawable/search_icon"
+        android:icon="@drawable/profile_icon"
         android:id="@+id/profile"/>
 </menu>
