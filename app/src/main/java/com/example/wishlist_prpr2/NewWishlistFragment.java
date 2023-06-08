@@ -24,10 +24,10 @@ public class NewWishlistFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_wishlist, container, false);
 
-        nameEditText = view.findViewById(R.id.edutWishlist_name);
-        descriptionEditText = view.findViewById(R.id.editWishlist_description);
-        deadlineEditText = view.findViewById(R.id.editWishlist_deadline);
-        saveButton = view.findViewById(R.id.editWishlist_saveButton);
+        nameEditText = view.findViewById(R.id.newWishlist_name);
+        descriptionEditText = view.findViewById(R.id.newWishlist_description);
+        deadlineEditText = view.findViewById(R.id.newWishlist_deadline);
+        saveButton = view.findViewById(R.id.newWishlist_saveButton);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

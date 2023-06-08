@@ -27,11 +27,11 @@ public class NewItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_item, container, false);
 
-        nameEditText = view.findViewById(R.id.edutWishlist_name);
-        descriptionEditText = view.findViewById(R.id.editWishlist_description);
+        nameEditText = view.findViewById(R.id.newItem_name);
+        descriptionEditText = view.findViewById(R.id.newItem_description);
         priceEditText = view.findViewById(R.id.newItem_price);
         linkEditText = view.findViewById(R.id.newItem_link);
-        saveButton = view.findViewById(R.id.editWishlist_saveButton);
+        saveButton = view.findViewById(R.id.newItem_save);
         selectImageButton = view.findViewById(R.id.newItem_selectImage);
 
         selectImageButton.setOnClickListener(new View.OnClickListener() {
@@ -61,5 +61,4 @@ public class NewItemFragment extends Fragment {
         });
         return view;
     }
-
 }

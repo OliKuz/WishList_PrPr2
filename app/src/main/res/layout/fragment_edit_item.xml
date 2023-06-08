@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:text="New Item"
+        android:text="Edit Item"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <EditText
-            android:id="@+id/newItem_name"
+            android:id="@+id/editItem_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -37,7 +37,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/newItem_description"
+            android:id="@+id/editItem_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -45,7 +45,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/newItem_link"
+            android:id="@+id/editItem_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -53,27 +53,39 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/newItem_price"
+            android:id="@+id/editItem_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="20dp"
             android:hint="Price"
             android:inputType="textEmailAddress" />
 
-        <Button
-            android:id="@+id/newItem_selectImage"
+        <EditText
+            android:id="@+id/editItem_priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttons_layout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:onClick="onPhotoButtonClicked"
-            android:text="Select Photo" />
+            android:layout_marginBottom="20dp"
+            android:hint="Priority"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/editItem_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:hint="List"
+            android:inputType="textEmailAddress" />
 
         <Button
-            android:id="@+id/newItem_save"
+            android:id="@+id/editItem_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save" />
+
+        <Button
+            android:id="@+id/editItem_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DELETE" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@ public class EditWishlistFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_wishlist, container, false);
 
-        nameEditText = view.findViewById(R.id.edutWishlist_name);
+        nameEditText = view.findViewById(R.id.editWishlist_name);
         descriptionEditText = view.findViewById(R.id.editWishlist_description);
         deadlineEditText = view.findViewById(R.id.editWishlist_deadline);
         saveButton = view.findViewById(R.id.editWishlist_saveButton);
@@ -47,8 +47,9 @@ public class EditWishlistFragment extends Fragment {
                 }
                 else {
                     // TODO: update wishlist in API
-                    homeActivity.replaceFragment(new CreateFragment(homeActivity));
                     Toast.makeText(homeActivity, "Wishlist successfully updated", Toast.LENGTH_SHORT).show();
+                    // TODO: go back to previous fragment
+                    homeActivity.replaceFragment(new CreateFragment(homeActivity));
                 }
             }
         });
@@ -57,8 +58,9 @@ public class EditWishlistFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO: delete wishlist in API
-                homeActivity.replaceFragment(new CreateFragment(homeActivity));
                 Toast.makeText(homeActivity, "Wishlist successfully deleted", Toast.LENGTH_SHORT).show();
+                // TODO: go back to previous fragment
+                homeActivity.replaceFragment(new CreateFragment(homeActivity));
             }
         });
         return view;

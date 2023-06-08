@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <EditText
-            android:id="@+id/edutWishlist_name"
+            android:id="@+id/editWishlist_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -48,7 +48,7 @@
             android:id="@+id/editWishlist_deadline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="20dp"
             android:hint="Deadline"
             android:inputType="date" />
 
