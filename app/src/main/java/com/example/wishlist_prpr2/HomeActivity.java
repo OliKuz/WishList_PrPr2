@@ -22,13 +22,13 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
-                    //replaceFragment(new HomeFragment());
+                    replaceFragment(new HomeFragment());
                 case R.id.search:
-                    // replaceFragment(new SearchFragment());
+                    replaceFragment(new SearchFragment());
                 case R.id.wishlists:
-                    //replaceFragment(new WishlistsFragment());
+                    replaceFragment(new WishlistsFragment());
                 case R.id.profile:
-                    //replaceFragment(new ProfileFragment());
+                    replaceFragment(new ProfileFragment());
             }
             return false;
         });
