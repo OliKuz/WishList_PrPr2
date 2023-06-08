@@ -33,7 +33,7 @@ public class CreateFragment extends Fragment {
         newWishlistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //homeActivity.replaceFragment(new NewWishlistFragment(homeActivity));
+                homeActivity.replaceFragment(new NewWishlistFragment(homeActivity));
             }
         });
         return view;
