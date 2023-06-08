@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <EditText
-            android:id="@+id/email_edit_text2"
+            android:id="@+id/newItem_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -37,7 +37,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/email_edit_text5"
+            android:id="@+id/newItem_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -45,7 +45,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/email_edit_text3"
+            android:id="@+id/newItem_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -53,7 +53,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/email_edit_text4"
+            android:id="@+id/newItem_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -61,7 +61,7 @@
             android:inputType="textEmailAddress" />
 
         <Button
-            android:id="@+id/select_photo_button2"
+            android:id="@+id/newItem_selectImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttons_layout"
