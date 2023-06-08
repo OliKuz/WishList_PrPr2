@@ -29,8 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         loginLayout = findViewById(R.id.login_layout);
         signupLayout = findViewById(R.id.signup_layout);
 
-        emailEditText = findViewById(R.id.s_email_edit_text);
-        passwordEditText = findViewById(R.id.s_password_edit_text);
+        emailEditText = findViewById(R.id.email_edit_text);
+        passwordEditText = findViewById(R.id.password_edit_text);
         nameEditText = findViewById(R.id.name_edit_text);
         confirmPasswordEditText = findViewById(R.id.confirm_password_edit_text);
         dobEditText = findViewById(R.id.dob_edit_text);
