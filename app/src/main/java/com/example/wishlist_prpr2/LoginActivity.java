@@ -50,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 } else {
                     //TODO check for the validity of the existence of the user
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
                 }
 
             }
@@ -80,6 +82,8 @@ public class LoginActivity extends AppCompatActivity {
                         return;
                     } else {
                         //TODO add condition to check if the account already exists
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
                     }
 
                 }
