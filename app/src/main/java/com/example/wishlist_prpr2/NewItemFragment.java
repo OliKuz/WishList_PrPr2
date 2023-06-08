@@ -27,11 +27,11 @@ public class NewItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_item, container, false);
 
-        nameEditText = view.findViewById(R.id.newWishlist_name);
-        descriptionEditText = view.findViewById(R.id.newWishlist_description);
+        nameEditText = view.findViewById(R.id.edutWishlist_name);
+        descriptionEditText = view.findViewById(R.id.editWishlist_description);
         priceEditText = view.findViewById(R.id.newItem_price);
         linkEditText = view.findViewById(R.id.newItem_link);
-        saveButton = view.findViewById(R.id.newWishlist_saveButton);
+        saveButton = view.findViewById(R.id.editWishlist_saveButton);
         selectImageButton = view.findViewById(R.id.newItem_selectImage);
 
         selectImageButton.setOnClickListener(new View.OnClickListener() {

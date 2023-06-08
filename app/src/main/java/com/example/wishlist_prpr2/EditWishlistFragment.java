@@ -10,24 +10,25 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-public class NewWishlistFragment extends Fragment {
+public class EditWishlistFragment extends Fragment {
     private HomeActivity homeActivity;
-    private Button saveButton;
+    private Button saveButton, deleteButton;
     private EditText nameEditText, descriptionEditText, deadlineEditText;
 
-    public NewWishlistFragment(HomeActivity homeActivity) {
+    public EditWishlistFragment(HomeActivity homeActivity) {
         this.homeActivity = homeActivity;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_new_wishlist, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_wishlist, container, false);
 
         nameEditText = view.findViewById(R.id.edutWishlist_name);
         descriptionEditText = view.findViewById(R.id.editWishlist_description);
         deadlineEditText = view.findViewById(R.id.editWishlist_deadline);
         saveButton = view.findViewById(R.id.editWishlist_saveButton);
+        deleteButton = view.findViewById(R.id.editWishlist_deleteButton);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,13 +46,21 @@ public class NewWishlistFragment extends Fragment {
                     Toast.makeText(homeActivity, "Please enter a date in the format dd/mm/yyyy", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    // TODO: save wishlist to API
+                    // TODO: update wishlist in API
                     homeActivity.replaceFragment(new CreateFragment(homeActivity));
-                    Toast.makeText(homeActivity, "Wishlist successfully created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(homeActivity, "Wishlist successfully updated", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: delete wishlist in API
+                homeActivity.replaceFragment(new CreateFragment(homeActivity));
+                Toast.makeText(homeActivity, "Wishlist successfully deleted", Toast.LENGTH_SHORT).show();
             }
         });
         return view;
     }
-
 }
