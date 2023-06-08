@@ -86,13 +86,12 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Please make sure your password confirmation matches your password", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
-                        //TODO add condition to check if the account already exists
+                        // TODO: add condition to check if the account already exists
                         User user = new User(name, lastname, email, password, dob);
-                        // TODO: add user to api
+                        // TODO: add user to API
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
                     }
-
                 }
             }
         });
