@@ -13,10 +13,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wishlist_prpr2.model.User;
+
 public class LoginActivity extends AppCompatActivity {
 
     private LinearLayout loginLayout, signupLayout;
-    private EditText emailEditText, passwordEditText, nameEditText, confirmPasswordEditText, dobEditText;
+    private EditText emailEditText, passwordEditText, nameEditText, confirmPasswordEditText, dobEditText, lastnameEditText;
     private Button loginButton, signupButton, selectPhotoButton;
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         signupLayout = findViewById(R.id.signup_layout);
 
         emailEditText = findViewById(R.id.email_edit_text);
+        lastnameEditText = findViewById(R.id.lastname_edit_text);
         passwordEditText = findViewById(R.id.password_edit_text);
         nameEditText = findViewById(R.id.name_edit_text);
         confirmPasswordEditText = findViewById(R.id.confirm_password_edit_text);
@@ -49,7 +52,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    //TODO check for the validity of the existence of the user
+                    // TODO check for the validity of the existence of the user
+
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
@@ -61,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = nameEditText.getText().toString();
+                String lastname = lastnameEditText.getText().toString();
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 String confirmPassword = confirmPasswordEditText.getText().toString();
@@ -82,6 +87,8 @@ public class LoginActivity extends AppCompatActivity {
                         return;
                     } else {
                         //TODO add condition to check if the account already exists
+                        User user = new User(name, lastname, email, password, dob);
+                        // TODO: add user to api
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
                     }

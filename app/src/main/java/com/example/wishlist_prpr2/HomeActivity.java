@@ -28,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
                     replaceFragment(new SearchFragment(this));
                     break;
                 case R.id.wishlists:
-                    replaceFragment(new WishlistsFragment(this));
+                    replaceFragment(new CreateFragment(this));
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileFragment(this));
