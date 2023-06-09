@@ -7,16 +7,26 @@ public class Product {
     private int price;
     private String link;
     private String image;
+    private int categoryID;
     private boolean is_active;
 
-    public Product(int id, String name, String description, int price, String link, String image, boolean is_active) {
+    public Product(int id, String name, String description, int price, String link, String image, int categoryID, boolean is_active) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.link = link;
         this.image = image;
+        this.categoryID = categoryID;
         this.is_active = is_active;
+    }
+
+    public int getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
     }
 
     public int getId() {
