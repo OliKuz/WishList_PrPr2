@@ -155,6 +155,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            // TODO: finish?
             Uri selectedImageUri = data.getData();
             //picture selected option
         }
@@ -188,15 +189,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ApiToken> call, @NonNull Response<ApiToken> response) {
                 if (response.isSuccessful()) {
-                    /*
                     assert response.body() != null;
-                    user.setApiToken(response.body());
-                    User.getUser().updateUser(user);
+                    CurrentUser.getInstance().setApiToken(response.body());
+                    CurrentUser.getInstance().updateUser(user);
 
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
-
-                     */
                 } else {
                     Toast.makeText(LoginActivity.this, "Incorrect Credentials", Toast.LENGTH_SHORT).show();
                 }
