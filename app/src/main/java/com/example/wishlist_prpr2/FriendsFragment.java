@@ -34,7 +34,7 @@ public class FriendsFragment extends Fragment {
         searchBar = view.findViewById(R.id.friends_search);
         recyclerFriendsView = view.findViewById(R.id.friends_recyclerview);
 
-        friendsAdapter = new FriendsAdapter(homeActivity, userList);
+        friendsAdapter = new FriendsAdapter(userList);
         friendsAdapter.setOnItemClickListener(new FriendsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {

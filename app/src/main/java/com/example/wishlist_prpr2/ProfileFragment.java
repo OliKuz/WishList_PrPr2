@@ -68,8 +68,13 @@ public class ProfileFragment extends Fragment {
         else{
             notCurrentUser();
         }
-        countWishlists();
         displayWishLists();
+        countWishlists();
+
+        if(wishlists.size() == 0) {
+            //TODO: set a no wishlists error
+        }
+
         Transformation transformation = new Transformation() {
             @Override
             public Bitmap transform(Bitmap source) {
@@ -133,13 +138,17 @@ public class ProfileFragment extends Fragment {
     }
 
     private void displayWishLists() {
-        /*
-        wishlistsAdapter = new WishlistsAdapter(homeActivity, wishlists);
-        wishlistsRecyclerView.setAdapter(wishlistsAdapter);
+        wishlistsAdapter = new WishlistsAdapter(wishlists);
+        wishlistsAdapter.setOnItemClickListener(new WishlistsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //TODO: link with wishlist fragment
+                //homeActivity.replaceFragment(new WishlistFragment(homeActivity, userList.get(position)));
+            }
+        });
         wishlistsRecyclerView.setHasFixedSize(true);
         wishlistsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-         */
+        wishlistsRecyclerView.setAdapter(wishlistsAdapter);
     }
 
     private void countFriends(){
@@ -183,13 +192,13 @@ public class ProfileFragment extends Fragment {
             }
             @Override
             public void onFailure(@NonNull Call<List<Wishlist>> call, @NonNull Throwable t) {
-
             }
         });
     }
 
     private void increaseNumWishlists(Wishlist wishlist){
         wishlists.add(wishlist);
+        displayWishLists();
         wishlistsButton.setText("Wishlists\n(" + wishlists.size() + ")");
     }
 }

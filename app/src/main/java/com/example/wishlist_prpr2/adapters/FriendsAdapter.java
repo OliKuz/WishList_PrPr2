@@ -22,17 +22,12 @@ import com.squareup.picasso.Transformation;
 import java.util.List;
 
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.UserViewHolder> {
-
-    public final List<User> usersList;
+    private final List<User> usersList;
     private OnItemClickListener listener;
-    public static HomeActivity homeActivity;
 
-    public FriendsAdapter(HomeActivity homeActivity, List<User> userList) {
+    public FriendsAdapter(List<User> userList) {
         this.usersList = userList;
-        FriendsAdapter.homeActivity = homeActivity;
-        System.out.println("NUM ITEMS: " + getItemCount());
     }
-
 
     public interface OnItemClickListener {
         void onItemClick(int position);
