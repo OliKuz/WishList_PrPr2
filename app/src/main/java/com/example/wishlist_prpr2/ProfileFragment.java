@@ -71,10 +71,6 @@ public class ProfileFragment extends Fragment {
         displayWishLists();
         countWishlists();
 
-        if(wishlists.size() == 0) {
-            //TODO: set a no wishlists error
-        }
-
         Transformation transformation = new Transformation() {
             @Override
             public Bitmap transform(Bitmap source) {
@@ -121,7 +117,7 @@ public class ProfileFragment extends Fragment {
                     homeActivity.replaceFragment(new FriendsFragment(homeActivity, friends));
                 }
                 else{
-                    Toast.makeText(homeActivity, "You have no friends yet", Toast.LENGTH_SHORT).show();
+                    homeActivity.replaceFragment(new DiscoverFriendsFragment(homeActivity));
                 }
             }
         });

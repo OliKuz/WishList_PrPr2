@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else if (!password.equals(confirmPassword)){
                         Toast.makeText(LoginActivity.this, "Please make sure your password confirmation matches your password", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (imagePath.isEmpty()) {
+                        if (imagePath == null) {
                             imagePath = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
                         }
                         User user = new User(name, lastname, email, password, dob, imagePath);
