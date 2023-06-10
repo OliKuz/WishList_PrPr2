@@ -15,13 +15,14 @@ import androidx.fragment.app.Fragment;
 import com.example.wishlist_prpr2.APIs.ApiSocial;
 import com.example.wishlist_prpr2.model.User;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SettingsFragment extends Fragment {
     private HomeActivity homeActivity;
-    private Button saveButton, logOutButton;
+    private Button saveButton, deleteAccountButton, logoutButton;
     private EditText nameEditText, lastnameEditText, emailEditText, passwordEditText, imagePath;
 
     public SettingsFragment(HomeActivity homeActivity) {
@@ -39,7 +40,8 @@ public class SettingsFragment extends Fragment {
         passwordEditText = view.findViewById(R.id.settings_password);
         imagePath = view.findViewById(R.id.settings_image);
         saveButton = view.findViewById(R.id.settings_save);
-        logOutButton = view.findViewById(R.id.settings_logout);
+        logoutButton = view.findViewById(R.id.settings_logout);
+        deleteAccountButton = view.findViewById(R.id.settings_deleteAccount);
 
         nameEditText.setText(CurrentUser.getInstance().getUser().getName());
         lastnameEditText.setText(CurrentUser.getInstance().getUser().getLast_name());
@@ -95,12 +97,34 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        logOutButton.setOnClickListener(new View.OnClickListener() {
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: log out user
+                CurrentUser.getInstance().setApiToken(null);
+                CurrentUser.getInstance().forgetUser();
+                Toast.makeText(homeActivity, "Successfully logged out", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(homeActivity, LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        deleteAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ApiSocial.getInstance().deleteUser(CurrentUser.getInstance().getApiToken()).enqueue(new Callback<ResponseBody>(){
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(homeActivity, "Account successfully deleted", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(homeActivity, LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                        Toast.makeText(homeActivity, "Failed to connect to API", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         return view;

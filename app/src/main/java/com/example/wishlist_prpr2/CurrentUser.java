@@ -34,4 +34,8 @@ public class CurrentUser {
     public String getApiToken() {
         return myApiToken.getApiToken();
     }
+
+    public void forgetUser() {
+        user = null;
+    }
 }

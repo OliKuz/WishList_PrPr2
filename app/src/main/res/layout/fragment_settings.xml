@@ -79,7 +79,13 @@
             android:id="@+id/settings_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log Out" />
+            android:text="Log out" />
+
+        <Button
+            android:id="@+id/settings_deleteAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="delete account" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
