@@ -14,6 +14,7 @@ import com.example.wishlist_prpr2.APIs.API;
 import com.example.wishlist_prpr2.model.User;
 import com.example.wishlist_prpr2.model.Wishlist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,6 +27,7 @@ public class ProfileFragment extends Fragment {
     private HomeActivity homeActivity;
     private int numFriends;
     private int numWishlists;
+    private final List<User> friends = new ArrayList<>();
 
     public ProfileFragment(HomeActivity homeActivity) {
         this.homeActivity = homeActivity;
@@ -48,7 +50,7 @@ public class ProfileFragment extends Fragment {
         friendsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                homeActivity.replaceFragment(new FriendsFragment(homeActivity));
+                homeActivity.replaceFragment(new FriendsFragment(homeActivity, friends));
             }
         });
         friendRequestsButton.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +68,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if(response.isSuccessful()){
-                    increaseNumFriends();
+                    assert response.body() != null;
+                    System.out.println("CURRENT API: " + CurrentUser.getInstance().getApiToken());
+                    friendsButton.setText("Friends (0)");
+                    List<User> friends = response.body();
+                    for (int i = 0; i < friends.size(); i++) {
+                        increaseNumFriends(friends.get(i));
+                    }
                 }
             }
             @Override
@@ -75,8 +83,10 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void increaseNumFriends(){
+    private void increaseNumFriends(User friend){
         numFriends++;
+        friends.add(friend);
+        friends.add(friend);
         friendsButton.setText("Friends (" + numFriends + ")");
     }
 
@@ -86,6 +96,7 @@ public class ProfileFragment extends Fragment {
             public void onResponse(@NonNull Call<List<Wishlist>> call, @NonNull Response<List<Wishlist>> response) {
                 if(response.isSuccessful()){
                     assert response.body() != null;
+                    wishlistsButton.setText("Wishlists (0)");
                     List<Wishlist> wishlists = response.body();
                     for (int i = 0; i < wishlists.size(); i++) {
                         if(wishlists.get(i).getUser_id() == CurrentUser.getInstance().getUser().getId()){
