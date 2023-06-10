@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
                     replaceFragment(new CreateFragment(this));
                     break;
                 case R.id.profile:
-                    replaceFragment(new ProfileFragment(this));
+                    replaceFragment(new ProfileFragment(this, CurrentUser.getInstance().getUser()));
                     break;
             }
             return true;

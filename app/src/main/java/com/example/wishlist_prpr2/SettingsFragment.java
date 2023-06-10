@@ -49,7 +49,7 @@ public class SettingsFragment extends Fragment {
                 else{
                     // TODO: update user in API
                     Toast.makeText(homeActivity, "Information successfully updated", Toast.LENGTH_SHORT).show();
-                    homeActivity.replaceFragment(new ProfileFragment(homeActivity));
+                    //homeActivity.replaceFragment(new ProfileFragment(homeActivity));
                 }
             }
         });

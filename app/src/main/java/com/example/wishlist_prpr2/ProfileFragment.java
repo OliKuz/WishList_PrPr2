@@ -12,11 +12,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishlist_prpr2.APIs.API;
+import com.example.wishlist_prpr2.adapters.WishlistsAdapter;
 import com.example.wishlist_prpr2.model.User;
 import com.example.wishlist_prpr2.model.Wishlist;
 import com.squareup.picasso.Picasso;
@@ -33,13 +37,16 @@ public class ProfileFragment extends Fragment {
     private Button friendsButton, wishlistsButton, friendRequestsButton;
     private TextView userName;
     private ImageView profilePicture;
+    private RecyclerView wishlistsRecyclerView;
     private HomeActivity homeActivity;
-    private int numFriends;
-    private int numWishlists;
+    private WishlistsAdapter wishlistsAdapter;
+    private User user;
     private final List<User> friends = new ArrayList<>();
+    private final List<Wishlist> wishlists = new ArrayList<>();
 
-    public ProfileFragment(HomeActivity homeActivity) {
+    public ProfileFragment(HomeActivity homeActivity, User user) {
         this.homeActivity = homeActivity;
+        this.user = user;
     }
 
     @Override
@@ -52,11 +59,12 @@ public class ProfileFragment extends Fragment {
         friendRequestsButton = view.findViewById(R.id.profile_friend_requests);
         userName = view.findViewById(R.id.profile_name);
         profilePicture = view.findViewById(R.id.profile_picture);
+        wishlistsRecyclerView = view.findViewById(R.id.profile_wishlists_recyclerview);
 
-        userName.setText(CurrentUser.getInstance().getUser().getName());
+        userName.setText(user.getName());
         countFriends();
         countWishlists();
-
+        displayWishLists();
         Transformation transformation = new Transformation() {
             @Override
             public Bitmap transform(Bitmap source) {
@@ -91,11 +99,16 @@ public class ProfileFragment extends Fragment {
             }
         };
 
-        Picasso.get().load(CurrentUser.getInstance().getUser().getImage()).transform(transformation).into(profilePicture);
+        Picasso.get().load(user.getImage()).transform(transformation).into(profilePicture);
         friendsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                homeActivity.replaceFragment(new FriendsFragment(homeActivity, friends));
+                if(friends.size() > 0) {
+                    homeActivity.replaceFragment(new FriendsFragment(homeActivity, friends));
+                }
+                else{
+                    Toast.makeText(homeActivity, "You have no friends yet", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         friendRequestsButton.setOnClickListener(new View.OnClickListener() {
@@ -108,13 +121,22 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    private void displayWishLists() {
+        /*
+        wishlistsAdapter = new WishlistsAdapter(homeActivity, wishlists);
+        wishlistsRecyclerView.setAdapter(wishlistsAdapter);
+        wishlistsRecyclerView.setHasFixedSize(true);
+        wishlistsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+         */
+    }
+
     private void countFriends(){
         API.getInstance().getFriendsOfLoggedInUser(CurrentUser.getInstance().getApiToken()).enqueue(new Callback<List<User>>(){
             @Override
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if(response.isSuccessful()){
                     assert response.body() != null;
-                    System.out.println("CURRENT API: " + CurrentUser.getInstance().getApiToken());
                     friendsButton.setText("Friends\n(0)");
                     List<User> friends = response.body();
                     for (int i = 0; i < friends.size(); i++) {
@@ -129,9 +151,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void increaseNumFriends(User friend){
-        numFriends++;
         friends.add(friend);
-        friendsButton.setText("Friends\n(" + numFriends + ")");
+        friendsButton.setText("Friends\n(" + friends.size() + ")");
     }
 
     private void countWishlists(){
@@ -143,8 +164,8 @@ public class ProfileFragment extends Fragment {
                     wishlistsButton.setText("Wishlists\n(0)");
                     List<Wishlist> wishlists = response.body();
                     for (int i = 0; i < wishlists.size(); i++) {
-                        if(wishlists.get(i).getUser_id() == CurrentUser.getInstance().getUser().getId()){
-                            increaseNumWishlists();
+                        if(wishlists.get(i).getUser_id() == user.getId()){
+                            increaseNumWishlists(wishlists.get(i));
                         }
                     }
                 }
@@ -156,8 +177,8 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void increaseNumWishlists(){
-        numWishlists++;
-        wishlistsButton.setText("Wishlists\n(" + numWishlists + ")");
+    private void increaseNumWishlists(Wishlist wishlist){
+        wishlists.add(wishlist);
+        wishlistsButton.setText("Wishlists\n(" + wishlists.size() + ")");
     }
 }
