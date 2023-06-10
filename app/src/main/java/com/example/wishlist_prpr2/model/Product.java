@@ -4,8 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Product {
-    @Expose
-    @SerializedName("id")
     private int id;
     @Expose
     @SerializedName("name")
@@ -23,28 +21,26 @@ public class Product {
     @SerializedName("image")
     private String image;
     @Expose
-    @SerializedName("categoryID")
-    private int categoryID;
-    @Expose
-    @SerializedName("is_active")
+    @SerializedName("categoryIds")
+    private int[] categoryIds;
     private boolean is_active;
 
-    public Product(String name, String description, String link,  String image, int price, int categoryID) {
+    public Product(String name, String description, String link,  String image, int price, int[] categoryID) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.link = link;
         this.image = image;
-        this.categoryID = categoryID;
+        this.categoryIds = categoryID;
         this.is_active = true;
     }
 
-    public int getCategoryID() {
-        return categoryID;
+    public int[] getCategoryIds() {
+        return categoryIds;
     }
 
-    public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
+    public void setCategoryIds(int[] categoryID) {
+        this.categoryIds = categoryID;
     }
 
     public int getId() {
@@ -95,11 +91,22 @@ public class Product {
         this.image = image;
     }
 
-    public boolean isIs_active() {
+    public boolean isActive() {
         return is_active;
     }
 
     public void setIs_active(boolean is_active) {
         this.is_active = is_active;
+    }
+
+    public void update(Product newProduct) {
+        this.id = newProduct.getId();
+        this.name = newProduct.getName();
+        this.description = newProduct.getDescription();
+        this.price = newProduct.getPrice();
+        this.link = newProduct.getLink();
+        this.image = newProduct.getImage();
+        this.categoryIds = newProduct.getCategoryIds();
+        this.is_active = newProduct.isActive();
     }
 }

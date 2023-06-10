@@ -1,8 +1,6 @@
 package com.example.wishlist_prpr2;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.wishlist_prpr2.APIs.ApiProducts;
-import com.example.wishlist_prpr2.APIs.ApiSocial;
 import com.example.wishlist_prpr2.model.Product;
-import com.example.wishlist_prpr2.model.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,11 +52,15 @@ public class NewItemFragment extends Fragment {
                     Toast.makeText(homeActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Product product = new Product(name, description, link, imagePath, Integer.parseInt(price), 0);
+                    Product product = new Product(name, description, link, imagePath, Integer.parseInt(price), new int[0]);
                     ApiProducts.getInstance().createProduct(product).enqueue(new Callback<Product>() {
                         @Override
                         public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
                             if (response.isSuccessful()) {
+                                Product newProduct = response.body();
+                                assert newProduct != null;
+                                product.update(newProduct);
+                                System.out.println(product.isActive());
                                 homeActivity.replaceFragment(new CreateFragment(homeActivity));
                                 Toast.makeText(homeActivity, "Item successfully created", Toast.LENGTH_SHORT).show();
                             } else {
