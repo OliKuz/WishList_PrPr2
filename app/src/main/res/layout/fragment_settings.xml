@@ -37,6 +37,14 @@
             android:inputType="textEmailAddress" />
 
         <EditText
+            android:id="@+id/settings_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:hint="Last Name"
+            android:inputType="textEmailAddress" />
+
+        <EditText
             android:id="@+id/settings_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,11 +61,13 @@
             android:hint="Password"
             android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/settings_photo"
+        <EditText
+            android:id="@+id/settings_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Change Photo" />
+            android:layout_marginBottom="20dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
 
         <Button
             android:id="@+id/settings_save"
