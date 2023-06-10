@@ -1,10 +1,20 @@
 package com.example.wishlist_prpr2.model;
 
-public class BadRequest {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
+public class BadRequest {
+    @Expose
+    @SerializedName("title")
     private String title;
+    @Expose
+    @SerializedName("status")
     private int status;
+    @Expose
+    @SerializedName("instance")
     private String instance;
+    @Expose
+    @SerializedName("detail")
     private String detail;
 
     public BadRequest(String title, int status, String instance, String detail) {

@@ -1,7 +1,14 @@
 package com.example.wishlist_prpr2.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class ResponseAction {
+    @Expose
+    @SerializedName("success")
     private String success;
+    @Expose
+    @SerializedName("payload")
     private String[] payload;
 
     public ResponseAction(String success, String[] payload) {

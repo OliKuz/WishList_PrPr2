@@ -1,7 +1,14 @@
 package com.example.wishlist_prpr2.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Reservation {
+    @Expose
+    @SerializedName("giftID")
     private int giftID;
+    @Expose
+    @SerializedName("userID")
     private int userID;
 
     public Reservation(int giftID, int userID) {

@@ -1,11 +1,25 @@
 package com.example.wishlist_prpr2.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Category {
+    @Expose
+    @SerializedName("id")
     private int id;
+    @Expose
+    @SerializedName("name")
     private String name;
+    @Expose
+    @SerializedName("description")
     private String description;
+    @Expose
+    @SerializedName("photo")
     private String photo;
+    @Expose
+    @SerializedName("categoryParentID")
     private int categoryParentID;
+
 
     public Category(int id, String name, String description, String photo, int categoryParentID) {
         this.id = id;
