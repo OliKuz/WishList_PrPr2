@@ -87,7 +87,13 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.UserView
                 return "circle";
             }
         };
-        Picasso.get().load(currentUser.getImage()).transform(transformation).into(holder.profilePicture);
+
+        String imagePath = currentUser.getImage();
+        if(imagePath == null || imagePath.isEmpty()) {
+            imagePath = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+        }
+        Picasso.get().load(imagePath).transform(transformation).into(holder.profilePicture);
+
     }
 
     @Override

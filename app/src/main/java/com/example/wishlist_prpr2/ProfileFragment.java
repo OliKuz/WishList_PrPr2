@@ -109,7 +109,11 @@ public class ProfileFragment extends Fragment {
             }
         };
 
-        Picasso.get().load(user.getImage()).transform(transformation).into(profilePicture);
+        String imagePath = user.getImage();
+        if(imagePath == null || imagePath.isEmpty()) {
+            imagePath = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+        }
+        Picasso.get().load(imagePath).transform(transformation).into(profilePicture);
         friendsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

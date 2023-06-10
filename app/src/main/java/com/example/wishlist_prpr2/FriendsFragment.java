@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
+import android.widget.Button;
 import androidx.recyclerview.widget.RecyclerView;
 
 import androidx.fragment.app.Fragment;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class FriendsFragment extends Fragment {
     private HomeActivity homeActivity;
-    private SearchView searchBar;
+    private Button discoverButton;
     private RecyclerView recyclerFriendsView;
     private FriendsAdapter friendsAdapter;
     private List<User> userList;
@@ -31,7 +31,7 @@ public class FriendsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
 
-        searchBar = view.findViewById(R.id.friends_search);
+        discoverButton = view.findViewById(R.id.friends_discover);
         recyclerFriendsView = view.findViewById(R.id.friends_recyclerview);
 
         friendsAdapter = new FriendsAdapter(userList);
@@ -44,6 +44,13 @@ public class FriendsFragment extends Fragment {
         recyclerFriendsView.setAdapter(friendsAdapter);
         recyclerFriendsView.setHasFixedSize(true);
         recyclerFriendsView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        discoverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                homeActivity.replaceFragment(new DiscoverFriendsFragment(homeActivity));
+            }
+        });
 
         return view;
     }

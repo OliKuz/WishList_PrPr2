@@ -27,6 +27,8 @@ public interface APIService {
     Call<ApiToken> authenticationUser(@Body UserObject userObject);
     @GET("users/search/")
     Call<List<User>> searchUser(@Header("Authorization") String apiToken, @Query("s") String name);
+    @GET("users")
+    Call<List<User>> getAllUsers(@Header("Authorization") String apiToken);
     @GET("users/{ID}")
     Call<List<User>> getUser(@Header("Authorization") String apiToken, @Path("ID") long userId);
     @DELETE("users")
