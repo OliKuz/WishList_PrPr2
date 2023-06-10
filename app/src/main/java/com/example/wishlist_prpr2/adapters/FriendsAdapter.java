@@ -1,5 +1,10 @@
 package com.example.wishlist_prpr2.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +16,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wishlist_prpr2.CurrentUser;
 import com.example.wishlist_prpr2.HomeActivity;
 import com.example.wishlist_prpr2.ProfileFragment;
 import com.example.wishlist_prpr2.R;
 import com.example.wishlist_prpr2.model.User;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +62,41 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.UserView
         User currentUser = usersList.get(position);
         holder.nameTextView.setText(currentUser.getName() + " " + currentUser.getLast_name());
 
-        System.out.println("DID POSITION: " + position);
-        //TODO: load image
+        Transformation transformation = new Transformation() {
+            @Override
+            public Bitmap transform(Bitmap source) {
+                int size = Math.min(source.getWidth(), source.getHeight());
+
+                int x = (source.getWidth() - size) / 2;
+                int y = (source.getHeight() - size) / 2;
+
+                Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
+                if (squaredBitmap != source) {
+                    source.recycle();
+                }
+
+                Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
+
+                Canvas canvas = new Canvas(bitmap);
+                Paint paint = new Paint();
+                BitmapShader shader = new BitmapShader(squaredBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+                paint.setShader(shader);
+                paint.setAntiAlias(true);
+
+                float radius = size / 2f;
+                canvas.drawCircle(radius, radius, radius, paint);
+
+                squaredBitmap.recycle();
+                return bitmap;
+            }
+
+            @Override
+            public String key() {
+                return "circle";
+            }
+        };
+
+        Picasso.get().load(currentUser.getImage()).transform(transformation).into(holder.profilePicture);
     }
 
     @Override

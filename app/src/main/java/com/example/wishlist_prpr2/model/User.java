@@ -75,6 +75,9 @@ public class User {
     }
 
     public String getImage() {
+        if(image == null){
+            return "https://balandrau.salle.url.edu/i3/repositoryimages/photo/47601a8b-dc7f-41a2-a53b-19d2e8f54cd0.png";
+        }
         return image;
     }
 
