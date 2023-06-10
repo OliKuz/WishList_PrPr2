@@ -14,8 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.wishlist_prpr2.APIs.API;
-import com.example.wishlist_prpr2.APIs.APIService;
+import com.example.wishlist_prpr2.APIs.ApiSocial;
 import com.example.wishlist_prpr2.APIs.ApiToken;
 import com.example.wishlist_prpr2.model.User;
 import com.example.wishlist_prpr2.model.UserObject;
@@ -64,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 } else {
-                    API.getInstance().authenticationUser(new UserObject(email, password)).enqueue(new Callback<ApiToken>() {
+                    ApiSocial.getInstance().authenticationUser(new UserObject(email, password)).enqueue(new Callback<ApiToken>() {
                         @Override
                         public void onResponse(@NonNull Call<ApiToken> call, @NonNull Response<ApiToken> response) {
                             if (response.isSuccessful()) {
@@ -109,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                             dob = "null";
                         }
                         User user = new User(name, lastname, email, password, dob);
-                        API.getInstance().registerUser(user).enqueue(new Callback<User>() {
+                        ApiSocial.getInstance().registerUser(user).enqueue(new Callback<User>() {
                             @Override
                             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                                 if (response.isSuccessful()) {
@@ -162,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getUser(ApiToken apiToken, String email, String password) {
-        API.getInstance().searchUser("Bearer " + apiToken.getApiToken(), email).enqueue(new Callback<List<User>>() {
+        ApiSocial.getInstance().searchUser("Bearer " + apiToken.getApiToken(), email).enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if (response.isSuccessful()) {
@@ -185,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void authenticationUser(User user) {
         UserObject userObject = new UserObject(user.getEmail(), user.getPassword());
-        API.getInstance().authenticationUser(userObject).enqueue(new Callback<ApiToken>() {
+        ApiSocial.getInstance().authenticationUser(userObject).enqueue(new Callback<ApiToken>() {
             @Override
             public void onResponse(@NonNull Call<ApiToken> call, @NonNull Response<ApiToken> response) {
                 if (response.isSuccessful()) {

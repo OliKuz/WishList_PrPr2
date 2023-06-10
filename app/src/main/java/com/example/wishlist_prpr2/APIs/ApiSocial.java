@@ -8,7 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class API {
+public class ApiSocial {
     private static final String URL = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/";
     private static APIService apiInterface;
 

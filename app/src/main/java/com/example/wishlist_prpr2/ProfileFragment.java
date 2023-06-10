@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wishlist_prpr2.APIs.API;
+import com.example.wishlist_prpr2.APIs.ApiSocial;
 import com.example.wishlist_prpr2.adapters.WishlistsAdapter;
 import com.example.wishlist_prpr2.model.User;
 import com.example.wishlist_prpr2.model.Wishlist;
@@ -152,7 +152,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void countFriends(){
-        API.getInstance().getFriendsOfLoggedInUser(CurrentUser.getInstance().getApiToken()).enqueue(new Callback<List<User>>(){
+        ApiSocial.getInstance().getFriendsOfLoggedInUser(CurrentUser.getInstance().getApiToken()).enqueue(new Callback<List<User>>(){
             @Override
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if(response.isSuccessful()){
@@ -176,7 +176,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void countWishlists(){
-        API.getInstance().getAllWishlists(CurrentUser.getInstance().getApiToken()).enqueue(new Callback<List<Wishlist>>(){
+        ApiSocial.getInstance().getAllWishlists(CurrentUser.getInstance().getApiToken()).enqueue(new Callback<List<Wishlist>>(){
             @Override
             public void onResponse(@NonNull Call<List<Wishlist>> call, @NonNull Response<List<Wishlist>> response) {
                 if(response.isSuccessful()){

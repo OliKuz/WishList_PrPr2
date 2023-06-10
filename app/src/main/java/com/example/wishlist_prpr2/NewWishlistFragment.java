@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.wishlist_prpr2.APIs.API;
+import com.example.wishlist_prpr2.APIs.ApiSocial;
 import com.example.wishlist_prpr2.model.Wishlist;
 
 import retrofit2.Call;
@@ -54,7 +54,7 @@ public class NewWishlistFragment extends Fragment {
                 }
                 else {
                     Wishlist wishlist = new Wishlist(name, description, deadline);
-                    API.getInstance().createWishlist(CurrentUser.getInstance().getApiToken(), wishlist).enqueue(new Callback<Wishlist>() {
+                    ApiSocial.getInstance().createWishlist(CurrentUser.getInstance().getApiToken(), wishlist).enqueue(new Callback<Wishlist>() {
                         @Override
                         public void onResponse(@NonNull Call<Wishlist> call, @NonNull Response<Wishlist> response) {
                             if (response.isSuccessful()) {
