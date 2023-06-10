@@ -64,10 +64,10 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/profile_items"
+                android:id="@+id/profile_friend_requests"
                 android:layout_width="244dp"
                 android:layout_height="wrap_content"
-                android:text="Reserved Items" />
+                android:text="Friend Requests" />
 
         </LinearLayout>
     </LinearLayout>

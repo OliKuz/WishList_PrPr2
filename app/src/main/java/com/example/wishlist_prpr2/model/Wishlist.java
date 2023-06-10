@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Wishlist {
+    @Expose
+    @SerializedName("id")
     private int id;
     @Expose
     @SerializedName("name")
@@ -13,8 +15,14 @@ public class Wishlist {
     @Expose
     @SerializedName("description")
     private String description;
+    @Expose
+    @SerializedName("user_id")
     private int user_id;
+    @Expose
+    @SerializedName("gifts")
     private List<Gift> gifts;
+    @Expose
+    @SerializedName("creation_date")
     private String creation_date;
     @Expose
     @SerializedName("end_date")
