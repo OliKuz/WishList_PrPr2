@@ -11,14 +11,25 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wishlist_prpr2.APIs.API;
+import com.example.wishlist_prpr2.APIs.APIService;
+import com.example.wishlist_prpr2.APIs.ApiToken;
 import com.example.wishlist_prpr2.model.User;
+import com.example.wishlist_prpr2.model.UserObject;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LinearLayout loginLayout, signupLayout;
-    private EditText emailEditText, passwordEditText, nameEditText, confirmPasswordEditText, dobEditText, lastnameEditText;
+    private EditText emailEditText, emailLogEditText, passwordEditText, passwordLogEditText, nameEditText, confirmPasswordEditText, dobEditText, lastnameEditText;
     private Button loginButton, signupButton, selectPhotoButton;
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -31,9 +42,11 @@ public class LoginActivity extends AppCompatActivity {
         loginLayout = findViewById(R.id.login_layout);
         signupLayout = findViewById(R.id.signup_layout);
 
-        emailEditText = findViewById(R.id.email_edit_text);
+        emailLogEditText = findViewById(R.id.email_edit_text);
+        emailEditText = findViewById(R.id.s_email_edit_text);
         lastnameEditText = findViewById(R.id.lastname_edit_text);
-        passwordEditText = findViewById(R.id.password_edit_text);
+        passwordEditText = findViewById(R.id.s_password_edit_text);
+        passwordLogEditText = findViewById(R.id.password_edit_text);
         nameEditText = findViewById(R.id.name_edit_text);
         confirmPasswordEditText = findViewById(R.id.confirm_password_edit_text);
         dobEditText = findViewById(R.id.dob_edit_text);
@@ -45,17 +58,27 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
+                String email = emailLogEditText.getText().toString();
+                String password = passwordLogEditText.getText().toString();
 
                 if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                    return;
                 } else {
-                    // TODO check for the validity of the existence of the user
-
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
+                    API.getInstance().authenticationUser(new UserObject(email, password)).enqueue(new Callback<ApiToken>() {
+                        @Override
+                        public void onResponse(@NonNull Call<ApiToken> call, @NonNull Response<ApiToken> response) {
+                            if (response.isSuccessful()) {
+                                assert response.body() != null;
+                                getUser(response.body(), email, password);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Incorrect Credentials", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        @Override
+                        public void onFailure(@NonNull Call<ApiToken> call, @NonNull Throwable t) {
+                            Toast.makeText(LoginActivity.this, "Connection to API failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
             }
@@ -71,26 +94,35 @@ public class LoginActivity extends AppCompatActivity {
                 String confirmPassword = confirmPasswordEditText.getText().toString();
                 String dob = dobEditText.getText().toString();
 
-                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || dob.isEmpty()) {
+                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() /*|| dob.isEmpty()*/) {
                     Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                    return;
                 } else {
                     String datePattern = "\\d{2}/(0[1-9]|1[0-2])/\\d{4}";
                     if (!dob.matches(datePattern)) {
                         Toast.makeText(LoginActivity.this, "Please enter date of birth in the format dd/mm/yyyy", Toast.LENGTH_SHORT).show();
-                        return;
                     } else if (password.length() < 9){
                         Toast.makeText(LoginActivity.this, "Please make sure your password is longer than 8 characters", Toast.LENGTH_SHORT).show();
-                        return;
                     } else if (!password.equals(confirmPassword)){
                         Toast.makeText(LoginActivity.this, "Please make sure your password confirmation matches your password", Toast.LENGTH_SHORT).show();
-                        return;
                     } else {
-                        // TODO: add condition to check if the account already exists
+                        if (dob.isEmpty()) {
+                            dob = "null";
+                        }
                         User user = new User(name, lastname, email, password, dob);
-                        // TODO: add user to API
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
+                        API.getInstance().registerUser(user).enqueue(new Callback<User>() {
+                            @Override
+                            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                                if (response.isSuccessful()) {
+                                    authenticationUser(user);
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                                Toast.makeText(LoginActivity.this, "Connection to API failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
             }
@@ -126,5 +158,50 @@ public class LoginActivity extends AppCompatActivity {
             Uri selectedImageUri = data.getData();
             //picture selected option
         }
+    }
+
+    private void getUser(ApiToken apiToken, String email, String password) {
+        API.getInstance().searchUser("Bearer " + apiToken.getApiToken(), email).enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    User user = response.body().get(0);
+                    user.setApiToken(apiToken);
+                    user.setPassword(password);
+
+                    User.getUser().updateUser(user);
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
+                Toast.makeText(LoginActivity.this, "Connection to API failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void authenticationUser(User user) {
+        UserObject userObject = new UserObject(user.getEmail(), user.getPassword());
+        API.getInstance().authenticationUser(userObject).enqueue(new Callback<ApiToken>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiToken> call, @NonNull Response<ApiToken> response) {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    user.setApiToken(response.body());
+                    User.getUser().updateUser(user);
+
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(LoginActivity.this, "Incorrect Credentials", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ApiToken> call, @NonNull Throwable t) {
+                Toast.makeText(LoginActivity.this, "Connection to API failed", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
