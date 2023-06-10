@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiProducts {
-    private static final String URL = "https://balandrau.salle.url.edu/i3/mercadoexpress/api-docs/v1/";
+    private static final String URL = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/";
     private static APIServiceProducts apiInterface;
 
     public static APIServiceProducts getInstance() {

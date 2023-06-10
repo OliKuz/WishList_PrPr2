@@ -10,13 +10,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-public class NewItemFragment extends Fragment {
+import com.example.wishlist_prpr2.APIs.ApiProducts;
+import com.example.wishlist_prpr2.APIs.ApiSocial;
+import com.example.wishlist_prpr2.model.Product;
+import com.example.wishlist_prpr2.model.User;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class NewItemFragment extends Fragment {
     private HomeActivity homeActivity;
-    private Button saveButton, selectImageButton;
-    private EditText nameEditText, descriptionEditText, priceEditText, linkEditText;
+    private Button saveButton;
+    private EditText nameEditText, descriptionEditText, priceEditText, linkEditText, selectImageURL;
 
     public NewItemFragment(HomeActivity homeActivity) {
         this.homeActivity = homeActivity;
@@ -32,15 +41,8 @@ public class NewItemFragment extends Fragment {
         priceEditText = view.findViewById(R.id.newItem_price);
         linkEditText = view.findViewById(R.id.newItem_link);
         saveButton = view.findViewById(R.id.newItem_save);
-        selectImageButton = view.findViewById(R.id.newItem_selectImage);
+        selectImageURL = view.findViewById(R.id.newItem_imageURL);
 
-        selectImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 1);
-            }
-        });
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,14 +50,28 @@ public class NewItemFragment extends Fragment {
                 String description = descriptionEditText.getText().toString();
                 String price = priceEditText.getText().toString();
                 String link = linkEditText.getText().toString();
+                String imagePath = selectImageURL.getText().toString();
 
                 if(name.isEmpty() || description.isEmpty() || price.isEmpty() || link.isEmpty()) {
                     Toast.makeText(homeActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    // TODO: save item to API
-                    homeActivity.replaceFragment(new CreateFragment(homeActivity));
-                    Toast.makeText(homeActivity, "Item successfully created", Toast.LENGTH_SHORT).show();
+                    Product product = new Product(name, description, link, imagePath, Integer.parseInt(price), 0);
+                    ApiProducts.getInstance().createProduct(product).enqueue(new Callback<Product>() {
+                        @Override
+                        public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
+                            if (response.isSuccessful()) {
+                                homeActivity.replaceFragment(new CreateFragment(homeActivity));
+                                Toast.makeText(homeActivity, "Item successfully created", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(homeActivity, "Error creating item", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        @Override
+                        public void onFailure(@NonNull Call<Product> call, @NonNull Throwable t) {
+                            Toast.makeText(homeActivity, "Connection to API failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });

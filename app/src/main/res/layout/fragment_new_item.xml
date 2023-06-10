@@ -56,19 +56,17 @@
             android:id="@+id/newItem_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="20dp"
             android:hint="Price"
             android:inputType="textEmailAddress" />
 
-        <Button
-            android:id="@+id/newItem_selectImage"
+        <EditText
+            android:id="@+id/newItem_imageURL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttons_layout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:onClick="onPhotoButtonClicked"
-            android:text="Select Photo" />
+            android:layout_marginBottom="8dp"
+            android:hint="Picture URL"
+            android:inputType="textEmailAddress" />
 
         <Button
             android:id="@+id/newItem_save"

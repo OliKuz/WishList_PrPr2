@@ -29,15 +29,14 @@ public class Product {
     @SerializedName("is_active")
     private boolean is_active;
 
-    public Product(int id, String name, String description, int price, String link, String image, int categoryID, boolean is_active) {
-        this.id = id;
+    public Product(String name, String description, String link,  String image, int price, int categoryID) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.link = link;
         this.image = image;
         this.categoryID = categoryID;
-        this.is_active = is_active;
+        this.is_active = true;
     }
 
     public int getCategoryID() {

@@ -18,7 +18,7 @@ import retrofit2.http.Query;
 public interface APIServiceProducts {
 
     @POST("products")
-    Call<APITokenProducts> createProduct(@Body Product product);
+    Call<Product> createProduct(@Body Product product);
 
     @GET("products")
     Call<List<Product>> getAllProducts(@Header("Authorization") String token);

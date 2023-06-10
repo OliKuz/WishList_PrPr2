@@ -2,6 +2,7 @@ package com.example.wishlist_prpr2;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -31,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailEditText, emailLogEditText, passwordEditText, passwordLogEditText, nameEditText, confirmPasswordEditText, dobEditText, lastnameEditText;
     private Button loginButton, signupButton, selectPhotoButton;
     private static final int PICK_IMAGE_REQUEST = 1;
+    private String imagePath;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -104,10 +106,10 @@ public class LoginActivity extends AppCompatActivity {
                     } else if (!password.equals(confirmPassword)){
                         Toast.makeText(LoginActivity.this, "Please make sure your password confirmation matches your password", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (dob.isEmpty()) {
-                            dob = "null";
+                        if (imagePath.isEmpty()) {
+                            imagePath = "null";
                         }
-                        User user = new User(name, lastname, email, password, dob);
+                        User user = new User(name, lastname, email, password, dob, imagePath);
                         ApiSocial.getInstance().registerUser(user).enqueue(new Callback<User>() {
                             @Override
                             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
@@ -154,10 +156,21 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            // TODO: finish?
             Uri selectedImageUri = data.getData();
-            //picture selected option
+            imagePath = getPathFromUri(selectedImageUri);
         }
+    }
+
+    private String getPathFromUri(Uri contentUri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, projection, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            String filePath = cursor.getString(columnIndex);
+            cursor.close();
+            return filePath;
+        }
+        return null;
     }
 
     private void getUser(ApiToken apiToken, String email, String password) {

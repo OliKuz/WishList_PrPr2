@@ -1,6 +1,5 @@
 package com.example.wishlist_prpr2.model;
 
-import com.example.wishlist_prpr2.APIs.ApiToken;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -23,14 +22,16 @@ public class User {
     @Expose
     @SerializedName("image")
     private String image;
+    private String dateOfBirth;
 
     public User(){
     }
-    public User(String name, String last_name, String email, String password, String image) {
+    public User(String name, String last_name, String email, String password, String dateOfBirth, String image) {
         this.name = name;
         this.last_name = last_name;
         this.email = email;
         this.password = password;
+        this.dateOfBirth = dateOfBirth;
         this.image = image;
     }
 
@@ -85,4 +86,7 @@ public class User {
         this.image = image;
     }
 
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
 }
