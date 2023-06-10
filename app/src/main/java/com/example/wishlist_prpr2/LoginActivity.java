@@ -167,10 +167,10 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
                     User user = response.body().get(0);
-                    user.setApiToken(apiToken);
                     user.setPassword(password);
+                    CurrentUser.getInstance().updateUser(user);
+                    CurrentUser.getInstance().setApiToken(apiToken);
 
-                    User.getUser().updateUser(user);
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
@@ -188,12 +188,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ApiToken> call, @NonNull Response<ApiToken> response) {
                 if (response.isSuccessful()) {
+                    /*
                     assert response.body() != null;
                     user.setApiToken(response.body());
                     User.getUser().updateUser(user);
 
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
+
+                     */
                 } else {
                     Toast.makeText(LoginActivity.this, "Incorrect Credentials", Toast.LENGTH_SHORT).show();
                 }

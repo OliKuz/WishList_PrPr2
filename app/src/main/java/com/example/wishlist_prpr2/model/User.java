@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
-    private static User user;
     @Expose
     @SerializedName("id")
     private int id;
@@ -24,7 +23,6 @@ public class User {
     @Expose
     @SerializedName("image")
     private String image;
-    private ApiToken myApiToken;
 
     public User(){
     }
@@ -34,30 +32,6 @@ public class User {
         this.email = email;
         this.password = password;
         this.image = image;
-        user = new User();
-    }
-
-    public void updateUser(User user) {
-        this.id = user.id;
-        this.myApiToken = user.myApiToken;
-        this.name = user.name;
-        this.last_name = user.last_name;
-        this.email = user.email;
-        this.password = user.password;
-        this.image = user.image;
-    }
-
-    public static User getUser(){
-        if(user == null){
-            return new User();
-        }
-        return user;
-    }
-
-    public void setApiToken(ApiToken mApiToken) {
-        System.out.println("ApiToken: " + mApiToken.getApiToken());
-        mApiToken.extension();
-        this.myApiToken = mApiToken;
     }
 
     public int getId() {
@@ -108,11 +82,4 @@ public class User {
         this.image = image;
     }
 
-    public ApiToken getMyApiToken() {
-        return myApiToken;
-    }
-
-    public void setMyApiToken(ApiToken myApiToken) {
-        this.myApiToken = myApiToken;
-    }
 }

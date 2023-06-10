@@ -43,7 +43,7 @@ public interface APIService {
 
     // WISHLISTS
     @POST("wishlists")
-    Call<Wishlist> createWishlist(@Body Wishlist wishlist);
+    Call<Wishlist> createWishlist(@Header("Authorization") String apiToken, @Body Wishlist wishlist);
     @GET("wishlists")
     Call<List<Wishlist>> getAllWishlists(@Header("Authorization") String apiToken);
     @GET("wishlists/{ID}")
@@ -55,14 +55,14 @@ public interface APIService {
 
     // RESERVATIONS
     @POST("reservations/{gift_ID}/{user_ID}")
-    Call<Reservation> createReservation(@Body Reservation reservation, @Path("gift_ID") long giftId, @Path("user_ID") long userId);
+    Call<Reservation> createReservation(@Header("Authorization") String apiToken,@Body Reservation reservation, @Path("gift_ID") long giftId, @Path("user_ID") long userId);
 
     @DELETE("reservations/{gift_ID}/{user_ID}")
     Call<ResponseBody> deleteReservation(@Header("Authorization") String apiToken, @Path("gift_ID") long giftId, @Path("user_ID") long userId);
 
     // GIFTS
     @POST("gifts")
-    Call<Gift> createGift(@Body Gift gift);
+    Call<Gift> createGift(@Header("Authorization") String apiToken, @Body Gift gift);
     @GET("gifts")
     Call<List<Gift>> getAllGifts(@Header("Authorization") String apiToken);
     @GET("gifts/{ID}/user")

@@ -8,7 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.example.wishlist_prpr2.APIs.API;
+import com.example.wishlist_prpr2.model.Wishlist;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewWishlistFragment extends Fragment {
     private HomeActivity homeActivity;
@@ -45,13 +53,25 @@ public class NewWishlistFragment extends Fragment {
                     Toast.makeText(homeActivity, "Please enter a date in the format dd/mm/yyyy", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    // TODO: save wishlist to API
-                    homeActivity.replaceFragment(new CreateFragment(homeActivity));
-                    Toast.makeText(homeActivity, "Wishlist successfully created", Toast.LENGTH_SHORT).show();
+                    Wishlist wishlist = new Wishlist(name, description, deadline);
+                    API.getInstance().createWishlist(CurrentUser.getInstance().getApiToken(), wishlist).enqueue(new Callback<Wishlist>() {
+                        @Override
+                        public void onResponse(@NonNull Call<Wishlist> call, @NonNull Response<Wishlist> response) {
+                            if (response.isSuccessful()) {
+                                homeActivity.replaceFragment(new CreateFragment(homeActivity));
+                                Toast.makeText(homeActivity, "Wishlist successfully created", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(homeActivity, "Failed to create wishlist", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        @Override
+                        public void onFailure(@NonNull Call<Wishlist> call, @NonNull Throwable t) {
+                            Toast.makeText(homeActivity, "Connection to API failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
         return view;
     }
-
 }

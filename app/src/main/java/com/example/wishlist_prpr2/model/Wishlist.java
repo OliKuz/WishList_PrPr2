@@ -1,16 +1,30 @@
 package com.example.wishlist_prpr2.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Wishlist {
     private int id;
+    @Expose
+    @SerializedName("name")
     private String name;
+    @Expose
+    @SerializedName("description")
     private String description;
     private int user_id;
     private List<Gift> gifts;
     private String creation_date;
+    @Expose
+    @SerializedName("end_date")
     private String end_date;
 
+    public Wishlist(String name, String description, String end_date) {
+        this.name = name;
+        this.description = description;
+        this.end_date = end_date;
+    }
     public Wishlist(int id, String name, String description, int user_id, List<Gift> gifts, String creation_date, String end_date) {
         this.id = id;
         this.name = name;
