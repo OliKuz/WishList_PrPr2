@@ -40,9 +40,25 @@ public class WishlistsAdapter extends RecyclerView.Adapter<WishlistsAdapter.Wish
     @Override
     public void onBindViewHolder(WishlistViewHolder holder, int position) {
         Wishlist wishlist = wishlists.get(position);
-        holder.nameTextView.setText(wishlist.getName());
-        holder.descriptionTextView.setText(wishlist.getDescription());
-        holder.deadlineTextView.setText(wishlist.getEnd_date().substring(0, 10));
+        if(wishlist.getName() != null) {
+            holder.nameTextView.setText(wishlist.getName());
+        }
+        else{
+            holder.nameTextView.setText("Wishlist Without Name");
+        }
+        if(wishlist.getDescription() != null) {
+            holder.descriptionTextView.setText(wishlist.getDescription());
+        }
+        else{
+            holder.descriptionTextView.setText("No description");
+        }
+
+        if(wishlist.getEnd_date() != null) {
+            holder.deadlineTextView.setText(wishlist.getEnd_date().substring(0, 10));
+        }
+        else{
+            holder.deadlineTextView.setText("No deadline");
+        }
 
         holder.wishlistLayout.setOnClickListener(v -> {
             if (listener != null) {
