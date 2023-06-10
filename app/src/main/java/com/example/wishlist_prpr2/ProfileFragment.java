@@ -62,7 +62,12 @@ public class ProfileFragment extends Fragment {
         wishlistsRecyclerView = view.findViewById(R.id.profile_wishlists_recyclerview);
 
         userName.setText(user.getName());
-        countFriends();
+        if(user.equals(CurrentUser.getInstance().getUser())) {
+            countFriends();
+        }
+        else{
+            notCurrentUser();
+        }
         countWishlists();
         displayWishLists();
         Transformation transformation = new Transformation() {
@@ -119,6 +124,12 @@ public class ProfileFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void notCurrentUser() {
+        friendsButton.setVisibility(View.GONE);
+        friendRequestsButton.setVisibility(View.GONE);
+        wishlistsButton.setVisibility(View.GONE);
     }
 
     private void displayWishLists() {

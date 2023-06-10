@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishlist_prpr2.HomeActivity;
-import com.example.wishlist_prpr2.ProfileFragment;
 import com.example.wishlist_prpr2.R;
 import com.example.wishlist_prpr2.model.User;
 import com.squareup.picasso.Picasso;
