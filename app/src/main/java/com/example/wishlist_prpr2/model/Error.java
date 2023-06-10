@@ -4,26 +4,19 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Error {
-    @Expose
-    @SerializedName("success")
+
     private String success;
-    @Expose
-    @SerializedName("error")
+
     private String[] error;
-    @Expose
-    @SerializedName("type")
+
     private String type;
-    @Expose
-    @SerializedName("title")
+
     private String title;
-    @Expose
-    @SerializedName("status")
+
     private int status;
-    @Expose
-    @SerializedName("instance")
+
     private String instance;
-    @Expose
-    @SerializedName("detail")
+
     private String detail;
 
     public Error(String success, String[] error, String type, String title, int status, String instance, String detail) {
