@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +40,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        settingsButton = view.findViewById(R.id.home_settings);
+        settingsButton = view.findViewById(R.id.item_add_to_wishlist);
         usernameTextView = view.findViewById(R.id.home_username);
         wishlistsRecyclerView = view.findViewById(R.id.home_wishlists_recycler_view);
 

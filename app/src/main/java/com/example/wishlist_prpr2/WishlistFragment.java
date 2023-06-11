@@ -139,8 +139,7 @@ public class WishlistFragment extends Fragment {
         giftsAdapter.setOnItemClickListener(new GiftsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                // TODO: link with gift fragment
-                //homeActivity.replaceFragment(new WishlistFragment(homeActivity, gifts.get(position)));
+                homeActivity.replaceFragment(new ItemFragment(homeActivity, products.get(position)));
             }
             @Override
             public void onItemDeleted(int position) {

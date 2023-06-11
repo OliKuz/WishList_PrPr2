@@ -10,13 +10,17 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.wishlist_prpr2.model.Product;
+
 public class EditItemFragment extends Fragment {
     private HomeActivity homeActivity;
     private Button saveButton, deleteButton;
+    private Product product;
     private EditText nameEditText, descriptionEditText, priceEditText, priorityEditText, linkEditText, listEditText;
 
-    public EditItemFragment(HomeActivity homeActivity) {
+    public EditItemFragment(HomeActivity homeActivity, Product product) {
         this.homeActivity = homeActivity;
+        this.product = product;
     }
 
     @Override
