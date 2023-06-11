@@ -73,7 +73,7 @@ public interface APIService {
     Call<Gift> getGiftByID(@Header("Authorization") String apiToken, @Path("ID") long giftId);
     @PUT("gifts/{ID}")
     Call<Gift> updateGift(@Body Gift gift, @Header("Authorization") String apiToken, @Path("ID") long giftId);
-    @DELETE("wishlists/{ID}")
+    @DELETE("gifts/{ID}")
     Call<ResponseBody> deleteGift(@Header("Authorization") String apiToken, @Path("ID") long giftId);
 
     //FRIENDS

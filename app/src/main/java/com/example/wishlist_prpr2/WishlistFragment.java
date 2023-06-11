@@ -22,6 +22,7 @@ import com.example.wishlist_prpr2.model.Wishlist;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -135,13 +136,21 @@ public class WishlistFragment extends Fragment {
             }
             @Override
             public void onItemDeleted(int position) {
-                gifts.remove(position);
-                products.remove(position);
-                giftsAdapter.notifyItemRemoved(position);
-
-                //TODO delete item from wishlists in API
-
-                Toast.makeText(homeActivity, "Deleted gift from wishlists", Toast.LENGTH_SHORT).show();
+                ApiSocial.getInstance().deleteGift(CurrentUser.getInstance().getApiToken(), gifts.get(position).getId()).enqueue(new Callback<ResponseBody>(){
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                        if(response.isSuccessful()){
+                            gifts.remove(position);
+                            products.remove(position);
+                            giftsAdapter.notifyItemRemoved(position);
+                            Toast.makeText(homeActivity, "Deleted gift from wishlists", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                        Toast.makeText(homeActivity, "Connection to API failed. Couldn't remove gift", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
