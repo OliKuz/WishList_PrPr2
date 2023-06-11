@@ -13,7 +13,7 @@ public class Product {
     private String description;
     @Expose
     @SerializedName("price")
-    private int price;
+    private float price;
     @Expose
     @SerializedName("link")
     private String link;
@@ -25,7 +25,7 @@ public class Product {
     private int[] categoryIds;
     private boolean is_active;
 
-    public Product(String name, String description, String link,  String image, int price, int[] categoryID) {
+    public Product(String name, String description, String link,  String image, float price, int[] categoryID) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -67,11 +67,11 @@ public class Product {
         this.description = description;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
