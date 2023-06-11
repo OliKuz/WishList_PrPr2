@@ -135,12 +135,23 @@ public class WishlistFragment extends Fragment {
             }
             @Override
             public void onItemDeleted(int position) {
-                // TODO: delete item from list
+                gifts.remove(position);
+                products.remove(position);
+                giftsAdapter.notifyItemRemoved(position);
+
+                //TODO delete item from wishlists in API
+
+                Toast.makeText(homeActivity, "Deleted gift from wishlists", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onItemReserved(int position) {
-                //TODO reserve item
+                gifts.get(position).setBooked(true);
+                giftsAdapter.notifyDataSetChanged();
+
+                //TODO reserve item in API
+
+                Toast.makeText(homeActivity, "Gift successfully reserved", Toast.LENGTH_SHORT).show();
             }
         });
         giftsRecyclerView.setHasFixedSize(true);
