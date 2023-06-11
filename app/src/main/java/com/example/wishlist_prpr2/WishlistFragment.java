@@ -155,12 +155,20 @@ public class WishlistFragment extends Fragment {
 
             @Override
             public void onItemReserved(int position) {
-                gifts.get(position).setBooked(true);
-                giftsAdapter.notifyDataSetChanged();
-
-                //TODO reserve item in API
-
-                Toast.makeText(homeActivity, "Gift successfully reserved", Toast.LENGTH_SHORT).show();
+                ApiSocial.getInstance().reserveGift(CurrentUser.getInstance().getApiToken(), gifts.get(position).getId()).enqueue(new Callback<ResponseBody>(){
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                        if(response.isSuccessful()){
+                            gifts.get(position).setBooked(true);
+                            giftsAdapter.notifyDataSetChanged();
+                            Toast.makeText(homeActivity, "Gift successfully reserved", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                        Toast.makeText(homeActivity, "Connection to API failed. Couldn't remove gift", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         giftsRecyclerView.setHasFixedSize(true);

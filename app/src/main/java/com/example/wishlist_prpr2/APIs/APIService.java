@@ -75,6 +75,8 @@ public interface APIService {
     Call<Gift> updateGift(@Body Gift gift, @Header("Authorization") String apiToken, @Path("ID") long giftId);
     @DELETE("gifts/{ID}")
     Call<ResponseBody> deleteGift(@Header("Authorization") String apiToken, @Path("ID") long giftId);
+    @POST("gifts/{ID}/book")
+    Call<ResponseBody> reserveGift(@Header("Authorization") String apiToken, @Path("ID") long giftId);
 
     //FRIENDS
     @GET("friends")
