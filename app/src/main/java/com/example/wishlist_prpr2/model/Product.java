@@ -29,7 +29,7 @@ public class Product {
     @SerializedName("is_active")
     private int is_active;
 
-    public Product(String name, String description, String link,  String image, int price, int[] categoryID) {
+    public Product(String name, String description, String link,  String image, float price, int[] categoryID) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -75,7 +75,7 @@ public class Product {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 

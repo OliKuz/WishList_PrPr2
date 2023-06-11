@@ -55,4 +55,7 @@ public class FriendsFragment extends Fragment {
         return view;
     }
 
+    public static class ItemFragment {
+
+    }
 }
