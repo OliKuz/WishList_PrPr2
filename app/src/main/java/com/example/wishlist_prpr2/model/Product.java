@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Product {
+    @Expose
+    @SerializedName("id")
     private int id;
     @Expose
     @SerializedName("name")
@@ -18,12 +20,14 @@ public class Product {
     @SerializedName("link")
     private String link;
     @Expose
-    @SerializedName("image")
+    @SerializedName("photo")
     private String image;
     @Expose
     @SerializedName("categoryIds")
     private int[] categoryIds;
-    private boolean is_active;
+    @Expose
+    @SerializedName("is_active")
+    private int is_active;
 
     public Product(String name, String description, String link,  String image, int price, int[] categoryID) {
         this.name = name;
@@ -32,7 +36,7 @@ public class Product {
         this.link = link;
         this.image = image;
         this.categoryIds = categoryID;
-        this.is_active = true;
+        this.is_active = 1;
     }
 
     public int[] getCategoryIds() {
@@ -91,11 +95,11 @@ public class Product {
         this.image = image;
     }
 
-    public boolean isActive() {
+    public int isActive() {
         return is_active;
     }
 
-    public void setIs_active(boolean is_active) {
+    public void setIs_active(int is_active) {
         this.is_active = is_active;
     }
 

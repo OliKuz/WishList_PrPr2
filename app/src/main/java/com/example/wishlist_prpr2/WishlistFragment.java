@@ -109,8 +109,6 @@ public class WishlistFragment extends Fragment {
                         assert response.body() != null;
                         products.add(response.body());
 
-                        System.out.println("products size: " + products.size() + " | id: " + id);
-
                         if(products.size() == gifts.size()) {
                             displayGifts();
                         }
@@ -118,7 +116,6 @@ public class WishlistFragment extends Fragment {
                 }
                 @Override
                 public void onFailure(@NonNull Call<Product> call, @NonNull Throwable t) {
-                    System.out.println("FAILED ON ID: " + id);
                     Toast.makeText(homeActivity, "Connection to API Products failed", Toast.LENGTH_SHORT).show();
                 }
             });
