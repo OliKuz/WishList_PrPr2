@@ -142,8 +142,7 @@ public class ProfileFragment extends Fragment {
         wishlistsAdapter.setOnItemClickListener(new WishlistsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                //TODO: link with wishlist fragment
-                //homeActivity.replaceFragment(new WishlistFragment(homeActivity, userList.get(position)));
+                homeActivity.replaceFragment(new WishlistFragment(homeActivity, wishlists.get(position)));
             }
         });
         wishlistsRecyclerView.setHasFixedSize(true);
