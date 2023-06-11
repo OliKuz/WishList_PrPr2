@@ -21,35 +21,35 @@ public interface APIServiceProducts {
     Call<Product> createProduct(@Body Product product);
 
     @GET("products")
-    Call<List<Product>> getAllProducts(@Header("Authorization") String token);
+    Call<List<Product>> getAllProducts();
 
     @GET("products/search")
-    Call<List<Product>> searchProducts(@Header("Authorization") String apiToken, @Query("s") String name);
+    Call<List<Product>> searchProducts(@Query("s") String name);
 
     @GET("products/{ID}")
-    Call<Product> getProductByID(@Header("Authorization") String token, @Path("ID") long productId);
+    Call<Product> getProductByID(@Path("ID") long productId);
 
     @DELETE("products/{ID}")
-    Call<ResponseBody> deleteProduct(@Header("Authorization") String token, @Path("ID") long productId);
+    Call<ResponseBody> deleteProduct(@Path("ID") long productId);
 
     @PUT("products/{ID}")
-    Call<Product> updateProduct(@Body Product product, @Header("Authorization") String token, @Path("ID") long productId);
+    Call<Product> updateProduct(@Body Product product, @Path("ID") long productId);
 
     //Categories
     @POST("categories")
     Call<APITokenProducts> createCategory(@Body Category category);
 
     @GET("categories")
-    Call<List<Category>> getAllCategories(@Header("Authorization") String token);
+    Call<List<Category>> getAllCategories();
 
     @GET("categories/{ID}")
-    Call<Category> getCategoryByID(@Header("Authorization") String token, @Path("ID") long categoryId);
+    Call<Category> getCategoryByID(@Path("ID") long categoryId);
 
     @DELETE("category/{ID}")
-    Call<ResponseBody> deleteCategory(@Header("Authorization") String token, @Path("ID") long categoryId);
+    Call<ResponseBody> deleteCategory(@Path("ID") long categoryId);
 
     @PUT("category/{ID}")
-    Call<Category> updateCategory(@Body Product product, @Header("Authorization") String token, @Path("ID") long categoryId);
+    Call<Category> updateCategory(@Path("ID") long categoryId);
 
 
 }

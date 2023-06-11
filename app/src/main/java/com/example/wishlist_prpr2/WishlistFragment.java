@@ -113,7 +113,7 @@ public class WishlistFragment extends Fragment {
     private void getProducts(List<Gift> gifts){
         for (int i = 0; i < gifts.size(); i++) {
             int id = Integer.parseInt(gifts.get(i).getProduct_url().substring(66));
-            ApiProducts.getInstance().getProductByID(CurrentUser.getInstance().getApiToken(), id).enqueue(new Callback<Product>(){
+            ApiProducts.getInstance().getProductByID(id).enqueue(new Callback<Product>(){
                 @Override
                 public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
                     if(response.isSuccessful()){
