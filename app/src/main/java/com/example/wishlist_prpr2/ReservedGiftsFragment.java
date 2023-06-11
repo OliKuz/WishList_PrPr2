@@ -28,15 +28,14 @@ import retrofit2.Response;
 
 public class ReservedGiftsFragment extends Fragment {
     private HomeActivity homeActivity;
-    private User user;
-    private List<Gift> gifts = new ArrayList<>();
+    private List<Gift> gifts;
     private final List<Product> products = new ArrayList<>();
     private RecyclerView giftsRecyclerView;
     private GiftsAdapter giftsAdapter;
 
-    public ReservedGiftsFragment(HomeActivity homeActivity, User user) {
+    public ReservedGiftsFragment(HomeActivity homeActivity, List<Gift> gifts) {
         this.homeActivity = homeActivity;
-        this.user = user;
+        this.gifts = gifts;
     }
 
     @Override
@@ -46,20 +45,8 @@ public class ReservedGiftsFragment extends Fragment {
 
         giftsRecyclerView = view.findViewById(R.id.reserved_gifts_recyclerView);
 
-        ApiSocial.getInstance().getGiftsReserved(CurrentUser.getInstance().getApiToken(), user.getId()).enqueue(new Callback<List<Gift>>(){
-            @Override
-            public void onResponse(@NonNull Call<List<Gift>> call, @NonNull Response<List<Gift>> response) {
-                if(response.isSuccessful()){
-                    assert response.body() != null;
-                    gifts = response.body();
-                    getProducts(gifts);
-                }
-            }
-            @Override
-            public void onFailure(@NonNull Call<List<Gift>> call, @NonNull Throwable t) {
-                Toast.makeText(homeActivity, "Connection to API failed", Toast.LENGTH_SHORT).show();
-            }
-        });
+        getProducts(gifts);
+
         return view;
     }
 

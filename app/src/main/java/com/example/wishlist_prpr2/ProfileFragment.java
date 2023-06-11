@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishlist_prpr2.APIs.ApiSocial;
 import com.example.wishlist_prpr2.adapters.WishlistsAdapter;
+import com.example.wishlist_prpr2.model.Gift;
 import com.example.wishlist_prpr2.model.User;
 import com.example.wishlist_prpr2.model.Wishlist;
 import com.squareup.picasso.Picasso;
@@ -42,6 +44,7 @@ public class ProfileFragment extends Fragment {
     private User user;
     private final List<User> friends = new ArrayList<>();
     private final List<Wishlist> wishlists = new ArrayList<>();
+    private List<Gift> gifts = new ArrayList<>();
 
     public ProfileFragment(HomeActivity homeActivity, User user) {
         this.homeActivity = homeActivity;
@@ -68,6 +71,7 @@ public class ProfileFragment extends Fragment {
             notCurrentUser();
         }
         countWishlists();
+        countReservedGifts();
 
         Transformation transformation = new Transformation() {
             @Override
@@ -122,7 +126,7 @@ public class ProfileFragment extends Fragment {
         reservedGiftsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                homeActivity.replaceFragment(new ReservedGiftsFragment(homeActivity, CurrentUser.getInstance().getUser()));
+                homeActivity.replaceFragment(new ReservedGiftsFragment(homeActivity, gifts));
             }
         });
         return view;
@@ -182,6 +186,23 @@ public class ProfileFragment extends Fragment {
             }
             @Override
             public void onFailure(@NonNull Call<List<Wishlist>> call, @NonNull Throwable t) {
+            }
+        });
+    }
+
+    private void countReservedGifts(){
+        ApiSocial.getInstance().getGiftsReserved(CurrentUser.getInstance().getApiToken(), user.getId()).enqueue(new Callback<List<Gift>>(){
+            @Override
+            public void onResponse(@NonNull Call<List<Gift>> call, @NonNull Response<List<Gift>> response) {
+                if(response.isSuccessful()){
+                    assert response.body() != null;
+                    gifts = response.body();
+                    reservedGiftsButton.setText("Reserved Gifts (" + gifts.size() + ")");
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<List<Gift>> call, @NonNull Throwable t) {
+                Toast.makeText(homeActivity, "Connection to API failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
