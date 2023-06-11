@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wishlist_prpr2.CurrentUser;
 import com.example.wishlist_prpr2.R;
 import com.example.wishlist_prpr2.model.Wishlist;
 

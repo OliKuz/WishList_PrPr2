@@ -125,12 +125,22 @@ public class WishlistFragment extends Fragment {
     }
 
     private void displayGifts(){
-        giftsAdapter = new GiftsAdapter(gifts, products);
+        boolean ownWishlists = wishlist.getUser_id() == CurrentUser.getInstance().getUser().getId();
+        giftsAdapter = new GiftsAdapter(gifts, products, ownWishlists);
         giftsAdapter.setOnItemClickListener(new GiftsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 // TODO: link with gift fragment
                 //homeActivity.replaceFragment(new WishlistFragment(homeActivity, gifts.get(position)));
+            }
+            @Override
+            public void onItemDeleted(int position) {
+                // TODO: delete item from list
+            }
+
+            @Override
+            public void onItemReserved(int position) {
+                //TODO reserve item
             }
         });
         giftsRecyclerView.setHasFixedSize(true);

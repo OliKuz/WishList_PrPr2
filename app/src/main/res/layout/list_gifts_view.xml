@@ -69,6 +69,7 @@
                     android:layout_height="30dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/delete_icon" />
             </LinearLayout>
 
@@ -104,5 +105,13 @@
             android:text="Reserve gift" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/gift_reserved"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="RESERVED"
+        android:visibility="gone" />
 
 </LinearLayout>
