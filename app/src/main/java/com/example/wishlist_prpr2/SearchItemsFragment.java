@@ -49,7 +49,7 @@ public class SearchItemsFragment extends Fragment {
         itemsAdapter.setOnItemClickListener(new ItemsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                //homeActivity.replaceFragment(new ItemFragment(homeActivity, itemList.get(position)));
+                homeActivity.replaceFragment(new ItemFragment(homeActivity, itemList.get(position)));
             }
         });
         recyclerItemsView.setAdapter(itemsAdapter);
