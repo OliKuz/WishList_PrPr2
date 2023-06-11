@@ -16,6 +16,7 @@ import com.example.wishlist_prpr2.APIs.ApiSocial;
 import com.example.wishlist_prpr2.model.Product;
 import com.example.wishlist_prpr2.model.Wishlist;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -78,7 +79,7 @@ public class EditItemFragment extends Fragment {
                             product.update(response.body());
 
                             Toast.makeText(homeActivity, "Item successfully updated", Toast.LENGTH_SHORT).show();
-                            homeActivity.replaceFragment(new SearchItemsFragment(homeActivity));
+                            homeActivity.replaceFragment(new HomeFragment(homeActivity));
                         }
                     }
                     @Override
@@ -92,10 +93,19 @@ public class EditItemFragment extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: delete item in API
-                Toast.makeText(homeActivity, "Item successfully deleted", Toast.LENGTH_SHORT).show();
-                // TODO: go back to previous fragment
-                homeActivity.replaceFragment(new CreateFragment(homeActivity));
+                ApiProducts.getInstance().deleteProduct(product.getId()).enqueue(new Callback<ResponseBody>(){
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(homeActivity, "Item successfully deleted", Toast.LENGTH_SHORT).show();
+                            homeActivity.replaceFragment(new HomeFragment(homeActivity));
+                        }
+                    }
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                        Toast.makeText(homeActivity, "Failed to connect to API", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         return view;
