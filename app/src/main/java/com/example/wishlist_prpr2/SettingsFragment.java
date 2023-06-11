@@ -81,7 +81,6 @@ public class SettingsFragment extends Fragment {
                         public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                             if(response.isSuccessful()){
                                 assert response.body() != null;
-                                System.out.println(CurrentUser.getInstance().getUser().getLast_name());
                                 CurrentUser.getInstance().updateUser(response.body());
                                 CurrentUser.getInstance().getUser().setPassword(password);
                                 Toast.makeText(homeActivity, "Information successfully updated", Toast.LENGTH_SHORT).show();

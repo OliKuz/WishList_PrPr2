@@ -8,15 +8,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.wishlist_prpr2.APIs.ApiSocial;
+import com.example.wishlist_prpr2.model.User;
+import com.example.wishlist_prpr2.model.Wishlist;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class EditWishlistFragment extends Fragment {
-    private HomeActivity homeActivity;
+    private final HomeActivity homeActivity;
     private Button saveButton, deleteButton;
     private EditText nameEditText, descriptionEditText, deadlineEditText;
+    private final Wishlist wishlist;
 
-    public EditWishlistFragment(HomeActivity homeActivity) {
+    public EditWishlistFragment(HomeActivity homeActivity, Wishlist wishlist) {
         this.homeActivity = homeActivity;
+        this.wishlist = wishlist;
     }
 
     @Override
@@ -30,26 +42,50 @@ public class EditWishlistFragment extends Fragment {
         saveButton = view.findViewById(R.id.editWishlist_saveButton);
         deleteButton = view.findViewById(R.id.editWishlist_deleteButton);
 
+        nameEditText.setText(wishlist.getName());
+        descriptionEditText.setText(wishlist.getDescription());
+        if(wishlist.getEnd_date() != null) {
+            deadlineEditText.setText(wishlist.getEnd_date().substring(0, 10));
+        }
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = nameEditText.getText().toString();
-                String description = descriptionEditText.getText().toString();
                 String deadline = deadlineEditText.getText().toString();
+                String datePattern = "\\d{4}-(0[1-9]|1[0-2])-\\d{2}";
 
-                String datePattern = "\\d{2}/(0[1-9]|1[0-2])/\\d{4}";
-
-                if(name.isEmpty() || description.isEmpty() || deadline.isEmpty()) {
-                    Toast.makeText(homeActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (!deadline.matches(datePattern)){
-                    Toast.makeText(homeActivity, "Please enter a date in the format dd/mm/yyyy", Toast.LENGTH_SHORT).show();
+                if (!deadline.matches(datePattern)){
+                    Toast.makeText(homeActivity, "Please enter a date in the format yyyy-mm-dd", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    // TODO: update wishlist in API
-                    Toast.makeText(homeActivity, "Wishlist successfully updated", Toast.LENGTH_SHORT).show();
-                    // TODO: go back to previous fragment
-                    homeActivity.replaceFragment(new CreateFragment(homeActivity));
+                    String name = nameEditText.getText().toString();
+                    if(!wishlist.getName().equals(name)){
+                        wishlist.setName(name);
+                    }
+                    String description = descriptionEditText.getText().toString();
+                    if(!wishlist.getDescription().equals(description)){
+                        wishlist.setDescription(description);
+                    }
+                    if(!wishlist.getEnd_date().equals(deadline)){
+                        wishlist.setEnd_date(deadline);
+                    }
+
+                    ApiSocial.getInstance().updateWishlist(wishlist, CurrentUser.getInstance().getApiToken(), wishlist.getId()).enqueue(new Callback<Wishlist>(){
+                        @Override
+                        public void onResponse(@NonNull Call<Wishlist> call, @NonNull Response<Wishlist> response) {
+                            if(response.isSuccessful()){
+                                assert response.body() != null;
+                                wishlist.update(response.body());
+
+                                Toast.makeText(homeActivity, "Information successfully updated", Toast.LENGTH_SHORT).show();
+                                homeActivity.replaceFragment(new WishlistFragment(homeActivity, wishlist));
+                            }
+                        }
+                        @Override
+                        public void onFailure(@NonNull Call<Wishlist> call, @NonNull Throwable t) {
+                            Toast.makeText(homeActivity, "Failed to connect to API", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
@@ -57,10 +93,19 @@ public class EditWishlistFragment extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: delete wishlist in API
-                Toast.makeText(homeActivity, "Wishlist successfully deleted", Toast.LENGTH_SHORT).show();
-                // TODO: go back to previous fragment
-                homeActivity.replaceFragment(new CreateFragment(homeActivity));
+                ApiSocial.getInstance().deleteWishlist(CurrentUser.getInstance().getApiToken(), wishlist.getId()).enqueue(new Callback<ResponseBody>(){
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(homeActivity, "Wishlist successfully deleted", Toast.LENGTH_SHORT).show();
+                            homeActivity.replaceFragment(new ProfileFragment(homeActivity, CurrentUser.getInstance().getUser()));
+                        }
+                    }
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                        Toast.makeText(homeActivity, "Failed to connect to API", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         return view;

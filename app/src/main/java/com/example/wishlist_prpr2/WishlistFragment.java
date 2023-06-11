@@ -33,7 +33,7 @@ public class WishlistFragment extends Fragment {
     private final List<Gift> gifts = new ArrayList<>();
     private final List<Product> products = new ArrayList<>();
     private GiftsAdapter giftsAdapter;
-    private TextView wishlistName, wishlistDescription, wishlistDeadline;
+    private TextView wishlistName, wishlistDescription, wishlistDeadline, edit;
     private RecyclerView giftsRecyclerView;
 
 
@@ -51,6 +51,7 @@ public class WishlistFragment extends Fragment {
         wishlistDescription = view.findViewById(R.id.wishlist_description);
         wishlistDeadline = view.findViewById(R.id.wishlist_deadline);
         giftsRecyclerView = view.findViewById(R.id.wishlist_gifts_recycler_view);
+        edit = view.findViewById(R.id.wishlist_edit);
 
         if(wishlist.getName() != null) {
             wishlistName.setText(wishlist.getName());
@@ -70,6 +71,16 @@ public class WishlistFragment extends Fragment {
         else{
             wishlistDeadline.setText("No deadline");
         }
+
+        if(wishlist.getUser_id() == CurrentUser.getInstance().getUser().getId()){
+            edit.setVisibility(View.VISIBLE);
+        }
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                homeActivity.replaceFragment(new EditWishlistFragment(homeActivity, wishlist));
+            }
+        });
 
         getGifts();
 

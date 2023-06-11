@@ -98,4 +98,14 @@ public class Wishlist {
     public void setEnd_date(String end_date) {
         this.end_date = end_date;
     }
+
+    public void update(Wishlist wishlist) {
+        this.id = wishlist.id;
+        this.description = wishlist.description;
+        this.end_date = wishlist.end_date;
+        this.creation_date = wishlist.creation_date;
+        this.gifts = wishlist.gifts;
+        this.name = wishlist.name;
+        this.user_id = wishlist.user_id;
+    }
 }
