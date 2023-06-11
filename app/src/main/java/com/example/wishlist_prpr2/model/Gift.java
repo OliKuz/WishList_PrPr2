@@ -4,13 +4,20 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Gift {
-
+    @Expose
+    @SerializedName("id")
     private int id;
 
+    @Expose
+    @SerializedName("wishlist_id")
     private int wishlist_id;
 
+    @Expose
+    @SerializedName("product_url")
     private String product_url;
 
+    @Expose
+    @SerializedName("priority")
     private int priority;
 
     private boolean booked;

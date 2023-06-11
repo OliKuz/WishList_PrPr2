@@ -13,7 +13,7 @@ public class Product {
     private String description;
     @Expose
     @SerializedName("price")
-    private int price;
+    private float price;
     @Expose
     @SerializedName("link")
     private String link;
@@ -67,7 +67,7 @@ public class Product {
         this.description = description;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
