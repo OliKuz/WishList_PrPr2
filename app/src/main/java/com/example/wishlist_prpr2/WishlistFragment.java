@@ -28,10 +28,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class WishlistFragment extends Fragment {
-    private HomeActivity homeActivity;
-    private Wishlist wishlist;
-    private List<Gift> gifts = new ArrayList<>();
-    private List<Product> products = new ArrayList<>();
+    private final HomeActivity homeActivity;
+    private final Wishlist wishlist;
+    private final List<Gift> gifts = new ArrayList<>();
+    private final List<Product> products = new ArrayList<>();
     private GiftsAdapter giftsAdapter;
     private TextView wishlistName, wishlistDescription, wishlistDeadline;
     private RecyclerView giftsRecyclerView;
@@ -159,7 +159,7 @@ public class WishlistFragment extends Fragment {
                     @Override
                     public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                         if(response.isSuccessful()){
-                            gifts.get(position).setBooked(true);
+                            gifts.get(position).setBooked(1);
                             giftsAdapter.notifyDataSetChanged();
                             Toast.makeText(homeActivity, "Gift successfully reserved", Toast.LENGTH_SHORT).show();
                         }

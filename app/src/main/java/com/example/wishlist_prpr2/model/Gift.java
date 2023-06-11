@@ -20,9 +20,11 @@ public class Gift {
     @SerializedName("priority")
     private int priority;
 
-    private boolean booked;
+    @Expose
+    @SerializedName("booked")
+    private int booked;
 
-    public Gift(int id, int wishlist_id, String product_url, int priority, boolean booked) {
+    public Gift(int id, int wishlist_id, String product_url, int priority, int booked) {
         this.id = id;
         this.wishlist_id = wishlist_id;
         this.product_url = product_url;
@@ -63,10 +65,10 @@ public class Gift {
     }
 
     public boolean isBooked() {
-        return booked;
+        return booked == 1;
     }
 
-    public void setBooked(boolean booked) {
+    public void setBooked(int booked) {
         this.booked = booked;
     }
 }
