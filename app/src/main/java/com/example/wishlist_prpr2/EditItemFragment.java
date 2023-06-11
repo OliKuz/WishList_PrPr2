@@ -8,15 +8,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.wishlist_prpr2.APIs.ApiProducts;
+import com.example.wishlist_prpr2.APIs.ApiSocial;
 import com.example.wishlist_prpr2.model.Product;
+import com.example.wishlist_prpr2.model.Wishlist;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EditItemFragment extends Fragment {
     private HomeActivity homeActivity;
     private Button saveButton, deleteButton;
     private Product product;
-    private EditText nameEditText, descriptionEditText, priceEditText, priorityEditText, linkEditText, listEditText;
+    private EditText nameEditText, descriptionEditText, priceEditText, linkEditText, imageEditText;
 
     public EditItemFragment(HomeActivity homeActivity, Product product) {
         this.homeActivity = homeActivity;
@@ -31,31 +39,53 @@ public class EditItemFragment extends Fragment {
         nameEditText = view.findViewById(R.id.editItem_name);
         descriptionEditText = view.findViewById(R.id.editItem_description);
         priceEditText = view.findViewById(R.id.editItem_price);
-        priorityEditText = view.findViewById(R.id.editItem_priority);
         linkEditText = view.findViewById(R.id.editItem_link);
-        listEditText = view.findViewById(R.id.editItem_list);
+        imageEditText = view.findViewById(R.id.editItem_image);
         saveButton = view.findViewById(R.id.editItem_save);
         deleteButton = view.findViewById(R.id.editItem_delete);
+
+        nameEditText.setText(product.getName());
+        descriptionEditText.setText(product.getDescription());
+        priceEditText.setText(Float.toString(product.getPrice()));
+        linkEditText.setText(product.getLink());
+        imageEditText.setText(product.getImage());
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = nameEditText.getText().toString();
+                if(!name.equals(product.getName())){
+                    product.setName(name);
+                }
                 String description = descriptionEditText.getText().toString();
+                if(!description.equals(product.getDescription())){
+                    product.setDescription(description);
+                }
                 String price = priceEditText.getText().toString();
+                if(!price.equals(Float.toString(product.getPrice()))){
+                    product.setPrice(Float.parseFloat(price));
+                }
                 String link = linkEditText.getText().toString();
-                String priority = priorityEditText.getText().toString();
-                String list = listEditText.getText().toString();
+                if(!link.equals(product.getLink())){
+                    product.setLink(link);
+                }
 
-                if(name.isEmpty() || description.isEmpty() || price.isEmpty() || link.isEmpty() || priority.isEmpty() || list.isEmpty()) {
-                    Toast.makeText(homeActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    // TODO: update item in API
-                    Toast.makeText(homeActivity, "Item successfully updated", Toast.LENGTH_SHORT).show();
-                    // TODO: go back to previous fragment
-                    homeActivity.replaceFragment(new CreateFragment(homeActivity));
-                }
+                ApiProducts.getInstance().updateProduct(product, product.getId()).enqueue(new Callback<Product>(){
+                    @Override
+                    public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
+                        if(response.isSuccessful()){
+                            assert response.body() != null;
+                            product.update(response.body());
+
+                            Toast.makeText(homeActivity, "Item successfully updated", Toast.LENGTH_SHORT).show();
+                            homeActivity.replaceFragment(new SearchItemsFragment(homeActivity));
+                        }
+                    }
+                    @Override
+                    public void onFailure(@NonNull Call<Product> call, @NonNull Throwable t) {
+                        Toast.makeText(homeActivity, "Failed to connect to API", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
