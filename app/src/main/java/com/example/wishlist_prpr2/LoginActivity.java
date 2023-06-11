@@ -29,8 +29,8 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private LinearLayout loginLayout, signupLayout;
-    private EditText emailEditText, emailLogEditText, passwordEditText, passwordLogEditText, nameEditText, confirmPasswordEditText, dobEditText, lastnameEditText;
-    private Button loginButton, signupButton, selectPhotoButton;
+    private EditText emailEditText, emailLogEditText, passwordEditText, passwordLogEditText, nameEditText, confirmPasswordEditText, dobEditText, lastnameEditText, imageEditText;
+    private Button loginButton, signupButton;
     private static final int PICK_IMAGE_REQUEST = 1;
     private String imagePath;
 
@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton = findViewById(R.id.login_button);
         signupButton = findViewById(R.id.signup_button);
-        selectPhotoButton = findViewById(R.id.select_photo_button);
+        imageEditText = findViewById(R.id.image_edit_text);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +94,9 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordEditText.getText().toString();
                 String confirmPassword = confirmPasswordEditText.getText().toString();
                 String dob = dobEditText.getText().toString();
+                String imagePath = imageEditText.getText().toString();
 
-                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() /*|| dob.isEmpty()*/) {
+                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || dob.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 } else {
                     String datePattern = "\\d{2}/(0[1-9]|1[0-2])/\\d{4}";
@@ -128,15 +129,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
-        selectPhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Open the photo selection from the device's gallery
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, PICK_IMAGE_REQUEST);
-            }
-        });
     }
 
     public void onSelectionClicked(View view) {
@@ -150,27 +142,6 @@ public class LoginActivity extends AppCompatActivity {
                 signupLayout.setVisibility(View.VISIBLE);
                 break;
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri selectedImageUri = data.getData();
-            imagePath = getPathFromUri(selectedImageUri);
-        }
-    }
-
-    private String getPathFromUri(Uri contentUri) {
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, projection, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            String filePath = cursor.getString(columnIndex);
-            cursor.close();
-            return filePath;
-        }
-        return null;
     }
 
     private void getUser(ApiToken apiToken, String email, String password) {

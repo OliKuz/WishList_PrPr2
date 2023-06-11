@@ -126,15 +126,13 @@
             android:inputType="date" />
 
 
-        <Button
-            android:id="@+id/select_photo_button"
+        <EditText
+            android:id="@+id/image_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttons_layout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:onClick="onPhotoButtonClicked"
-            android:text="Select Photo" />
+            android:layout_marginBottom="8dp"
+            android:hint="Profile Picture Link"
+            android:inputType="date" />
 
         <Button
             android:id="@+id/signup_button"

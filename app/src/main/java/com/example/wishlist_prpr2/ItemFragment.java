@@ -58,10 +58,11 @@ public class ItemFragment extends Fragment {
 
         String imagePath = product.getImage();
         if(imagePath == null || imagePath.isEmpty() || imagePath.equals("null")) {
-            imagePath = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+            Picasso.get().load(imagePath).into(image);
         }
-        Picasso.get().load(imagePath).into(image);
-
+        else {
+            image.setVisibility(View.GONE);
+        }
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

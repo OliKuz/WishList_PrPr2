@@ -20,11 +20,11 @@ public class Gift {
     @SerializedName("priority")
     private int priority;
 
-    /*
+
     @Expose
     @SerializedName("booked")
-     */
-    private int booked;
+    private Object booked;
+
 
     public Gift(int id, int wishlist_id, String product_url, int priority, int booked) {
         this.id = id;
@@ -73,10 +73,16 @@ public class Gift {
     }
 
     public boolean isBooked() {
-        return booked == 1;
+        if (booked instanceof Integer) {
+            return (Integer) booked == 1;
+        } else if (booked instanceof Boolean) {
+            return (Boolean) booked;
+        } else {
+            return false;
+        }
     }
 
-    public void setBooked(int booked) {
+    public void setBooked(Object booked) {
         this.booked = booked;
     }
 
