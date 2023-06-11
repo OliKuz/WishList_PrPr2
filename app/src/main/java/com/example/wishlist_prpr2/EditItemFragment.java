@@ -79,6 +79,7 @@ public class EditItemFragment extends Fragment {
                             product.update(response.body());
 
                             Toast.makeText(homeActivity, "Item successfully updated", Toast.LENGTH_SHORT).show();
+                            homeActivity.replaceFragment(new ItemFragment(homeActivity, product));
                         }
                     }
                     @Override
@@ -97,7 +98,6 @@ public class EditItemFragment extends Fragment {
                     public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                         if(response.isSuccessful()){
                             Toast.makeText(homeActivity, "Item successfully deleted", Toast.LENGTH_SHORT).show();
-                            homeActivity.replaceFragment(new HomeFragment(homeActivity));
                         }
                     }
                     @Override
