@@ -56,20 +56,6 @@ public class SearchItemsFragment extends Fragment {
         recyclerItemsView.setHasFixedSize(true);
         recyclerItemsView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                updateItems(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                updateItems(newText);
-                return true;
-            }
-        });
-
         return view;
     }
 
@@ -89,10 +75,27 @@ public class SearchItemsFragment extends Fragment {
                 if(response.isSuccessful()){
                     assert response.body() != null;
                     allItems = response.body();
+                    displayItems();
                 }
             }
             @Override
             public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+            }
+        });
+    }
+
+    private void displayItems(){
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                updateItems(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                updateItems(newText);
+                return true;
             }
         });
     }
