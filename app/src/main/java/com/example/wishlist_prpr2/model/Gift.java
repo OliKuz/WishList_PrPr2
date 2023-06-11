@@ -20,8 +20,10 @@ public class Gift {
     @SerializedName("priority")
     private int priority;
 
+    /*
     @Expose
     @SerializedName("booked")
+     */
     private int booked;
 
     public Gift(int id, int wishlist_id, String product_url, int priority, int booked) {
@@ -30,6 +32,12 @@ public class Gift {
         this.product_url = product_url;
         this.priority = priority;
         this.booked = booked;
+    }
+
+    public Gift(int wishlist_id, String product_url, int priority) {
+        this.wishlist_id = wishlist_id;
+        this.product_url = product_url;
+        this.priority = priority;
     }
 
     public int getId() {
@@ -70,5 +78,13 @@ public class Gift {
 
     public void setBooked(int booked) {
         this.booked = booked;
+    }
+
+    public void update(Gift gift){
+        this.wishlist_id = gift.getWishlist_id();
+        this.id = gift.getId();
+        this.booked = gift.booked;
+        this.priority = gift.getPriority();
+        this.product_url = gift.getProduct_url();
     }
 }

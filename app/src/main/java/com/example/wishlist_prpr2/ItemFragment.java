@@ -72,7 +72,7 @@ public class ItemFragment extends Fragment {
         addToWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: link with addToWishlistFragment
+                homeActivity.replaceFragment(new AddToWishlistFragment(homeActivity, product));
             }
         });
 
