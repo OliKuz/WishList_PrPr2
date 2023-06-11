@@ -79,7 +79,6 @@ public class EditItemFragment extends Fragment {
                             product.update(response.body());
 
                             Toast.makeText(homeActivity, "Item successfully updated", Toast.LENGTH_SHORT).show();
-                            homeActivity.replaceFragment(new HomeFragment(homeActivity));
                         }
                     }
                     @Override

@@ -66,6 +66,13 @@ public class AddToWishlistFragment extends Fragment {
                     priority.requestFocus();
                 }
                 else{
+                    try {
+                        Integer.parseInt(p);
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(homeActivity, "Priority must be a number", Toast.LENGTH_SHORT).show();
+                        priority.requestFocus();
+                        return;
+                    }
                     Gift gift = new Gift(selectedWishlist.getId(), "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/" + product.getId(), Integer.parseInt(p));
                     ApiSocial.getInstance().createGift(CurrentUser.getInstance().getApiToken(), gift).enqueue(new Callback<Gift>(){
                         @Override

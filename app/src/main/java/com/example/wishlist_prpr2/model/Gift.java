@@ -75,9 +75,14 @@ public class Gift {
     public boolean isBooked() {
         if (booked instanceof Integer) {
             return (Integer) booked == 1;
-        } else if (booked instanceof Boolean) {
+        }
+        else if (booked instanceof Boolean) {
             return (Boolean) booked;
-        } else {
+        }
+        else if (booked instanceof Double){
+            return (Double) booked == 1;
+        }
+        else {
             return false;
         }
     }

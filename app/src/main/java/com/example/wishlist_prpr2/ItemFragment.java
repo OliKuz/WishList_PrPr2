@@ -58,10 +58,10 @@ public class ItemFragment extends Fragment {
 
         String imagePath = product.getImage();
         if(imagePath == null || imagePath.isEmpty() || imagePath.equals("null")) {
-            Picasso.get().load(imagePath).into(image);
+            image.setVisibility(View.GONE);
         }
         else {
-            image.setVisibility(View.GONE);
+            Picasso.get().load(imagePath).into(image);
         }
         edit.setOnClickListener(new View.OnClickListener() {
             @Override

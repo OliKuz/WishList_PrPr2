@@ -170,6 +170,9 @@ public class WishlistFragment extends Fragment {
                             giftsAdapter.notifyDataSetChanged();
                             Toast.makeText(homeActivity, "Gift successfully reserved", Toast.LENGTH_SHORT).show();
                         }
+                        else{
+                            Toast.makeText(homeActivity, "Error reserving gift. Internal Server Error", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     @Override
                     public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {

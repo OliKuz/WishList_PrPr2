@@ -134,7 +134,6 @@ public class ProfileFragment extends Fragment {
 
     private void notCurrentUser() {
         friendsButton.setVisibility(View.GONE);
-        reservedGiftsButton.setVisibility(View.GONE);
         wishlistsButton.setVisibility(View.GONE);
     }
 
