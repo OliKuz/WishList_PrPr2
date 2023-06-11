@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -34,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
-    private Button friendsButton, wishlistsButton, friendRequestsButton;
+    private Button friendsButton, wishlistsButton, reservedGiftsButton;
     private TextView userName;
     private ImageView profilePicture;
     private RecyclerView wishlistsRecyclerView;
@@ -56,7 +55,7 @@ public class ProfileFragment extends Fragment {
 
         friendsButton = view.findViewById(R.id.profile_friends);
         wishlistsButton = view.findViewById(R.id.profile_wishlists);
-        friendRequestsButton = view.findViewById(R.id.profile_friend_requests);
+        reservedGiftsButton = view.findViewById(R.id.profile_reserved_gifts);
         userName = view.findViewById(R.id.profile_name);
         profilePicture = view.findViewById(R.id.profile_picture);
         wishlistsRecyclerView = view.findViewById(R.id.profile_wishlists_recyclerview);
@@ -68,7 +67,6 @@ public class ProfileFragment extends Fragment {
         else{
             notCurrentUser();
         }
-        displayWishLists();
         countWishlists();
 
         Transformation transformation = new Transformation() {
@@ -121,11 +119,10 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
-        friendRequestsButton.setOnClickListener(new View.OnClickListener() {
+        reservedGiftsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: link with friends request fragment
-                //homeActivity.replaceFragment(new FriendsRequestFragment(homeActivity));
+                homeActivity.replaceFragment(new ReservedGiftsFragment(homeActivity, CurrentUser.getInstance().getUser()));
             }
         });
         return view;
@@ -133,7 +130,7 @@ public class ProfileFragment extends Fragment {
 
     private void notCurrentUser() {
         friendsButton.setVisibility(View.GONE);
-        friendRequestsButton.setVisibility(View.GONE);
+        reservedGiftsButton.setVisibility(View.GONE);
         wishlistsButton.setVisibility(View.GONE);
     }
 
@@ -156,11 +153,9 @@ public class ProfileFragment extends Fragment {
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if(response.isSuccessful()){
                     assert response.body() != null;
-                    friendsButton.setText("Friends\n(0)");
-                    List<User> friends = response.body();
-                    for (int i = 0; i < friends.size(); i++) {
-                        increaseNumFriends(friends.get(i));
-                    }
+                    List<User> users = response.body();
+                    friends.addAll(users);
+                    friendsButton.setText("Friends\n(" + friends.size() + ")");
                 }
             }
             @Override
@@ -169,35 +164,25 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void increaseNumFriends(User friend){
-        friends.add(friend);
-        friendsButton.setText("Friends\n(" + friends.size() + ")");
-    }
-
     private void countWishlists(){
         ApiSocial.getInstance().getAllWishlists(CurrentUser.getInstance().getApiToken()).enqueue(new Callback<List<Wishlist>>(){
             @Override
             public void onResponse(@NonNull Call<List<Wishlist>> call, @NonNull Response<List<Wishlist>> response) {
                 if(response.isSuccessful()){
                     assert response.body() != null;
-                    wishlistsButton.setText("Wishlists\n(0)");
-                    List<Wishlist> wishlists = response.body();
-                    for (int i = 0; i < wishlists.size(); i++) {
-                        if(wishlists.get(i).getUser_id() == user.getId()){
-                            increaseNumWishlists(wishlists.get(i));
+                    List<Wishlist> responseWishlists = response.body();
+                    for (int i = 0; i < responseWishlists.size(); i++) {
+                        if(responseWishlists.get(i).getUser_id() == user.getId()){
+                            wishlists.add(responseWishlists.get(i));
                         }
                     }
+                    wishlistsButton.setText("Wishlists\n(" + wishlists.size() + ")");
+                    displayWishLists();
                 }
             }
             @Override
             public void onFailure(@NonNull Call<List<Wishlist>> call, @NonNull Throwable t) {
             }
         });
-    }
-
-    private void increaseNumWishlists(Wishlist wishlist){
-        wishlists.add(wishlist);
-        displayWishLists();
-        wishlistsButton.setText("Wishlists\n(" + wishlists.size() + ")");
     }
 }

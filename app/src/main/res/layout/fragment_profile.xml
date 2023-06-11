@@ -67,10 +67,10 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/profile_friend_requests"
+                android:id="@+id/profile_reserved_gifts"
                 android:layout_width="235dp"
                 android:layout_height="wrap_content"
-                android:text="Friend Requests"
+                android:text="Reserved Gifts"
                 android:textSize="12sp" />
 
         </LinearLayout>
