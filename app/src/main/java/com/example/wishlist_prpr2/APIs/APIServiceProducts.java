@@ -21,7 +21,7 @@ public interface APIServiceProducts {
     Call<Product> createProduct(@Body Product product);
 
     @GET("products")
-    Call<List<Product>> getAllProducts(@Header("Authorization") String token);
+    Call<List<Product>> getAllProducts();
 
     @GET("products/search")
     Call<List<Product>> searchProducts(@Header("Authorization") String apiToken, @Query("s") String name);
